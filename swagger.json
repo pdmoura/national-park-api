@@ -1,0 +1,254 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "CSE341 Project 2 API",
+    "description": "API for exploring National Parks and Activities. Authentication is handled via GitHub OAuth. Visit /auth/login to authenticate.",
+    "version": "1.0.0"
+  },
+  "host": "cse341-project-1-bo77.onrender.com",
+  "basePath": "/",
+  "schemes": ["https"],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["Welcome"],
+        "description": "Welcome endpoint. Shows login status and link to GitHub OAuth login.",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+    "/auth/login": {
+      "get": {
+        "tags": ["Auth"],
+        "description": "Redirects to GitHub for OAuth authentication.",
+        "responses": {
+          "302": { "description": "Redirect to GitHub" }
+        }
+      }
+    },
+    "/auth/callback": {
+      "get": {
+        "tags": ["Auth"],
+        "description": "GitHub OAuth callback. Redirects to / on success.",
+        "responses": {
+          "302": { "description": "Redirect to /" }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "description": "Logs out the current user and destroys the session.",
+        "responses": {
+          "302": { "description": "Redirect to /" }
+        }
+      }
+    },
+    "/parks/": {
+      "get": {
+        "tags": ["Parks"],
+        "description": "Get all parks",
+        "produces": ["application/json"],
+        "responses": {
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "post": {
+        "tags": ["Parks"],
+        "description": "Create a new park (requires GitHub OAuth login)",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "description": { "example": "Crater Lake inspires awe." },
+                "fullName": { "example": "Crater Lake National Park" },
+                "latLong": { "example": "lat:42.94065854, long:-122.1338414" },
+                "latitude": { "example": "42.94065854" },
+                "longitude": { "example": "-122.1338414" },
+                "parkCode": { "example": "crla" },
+                "url": { "example": "https://www.nps.gov/crla/index.htm" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Validation Error" },
+          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/parks/{id}": {
+      "get": {
+        "tags": ["Parks"],
+        "description": "Get a single park by ID",
+        "produces": ["application/json"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "400": { "description": "Invalid ID" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "put": {
+        "tags": ["Parks"],
+        "description": "Update a park (requires GitHub OAuth login)",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "description": { "example": "Crater Lake inspires awe." },
+                "fullName": { "example": "Crater Lake National Park" },
+                "latLong": { "example": "lat:42.94065854, long:-122.1338414" },
+                "latitude": { "example": "42.94065854" },
+                "longitude": { "example": "-122.1338414" },
+                "parkCode": { "example": "crla" },
+                "url": { "example": "https://www.nps.gov/crla/index.htm" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "400": { "description": "Validation Error / Invalid ID" },
+          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "delete": {
+        "tags": ["Parks"],
+        "description": "Delete a park (requires GitHub OAuth login)",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "400": { "description": "Invalid ID" },
+          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/activities/": {
+      "get": {
+        "tags": ["Activities"],
+        "description": "Get all activities (optionally filter by parkCode)",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "parkCode",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Filter activities by park code (e.g. crla, yell, yose)"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "post": {
+        "tags": ["Activities"],
+        "description": "Create a new activity (requires GitHub OAuth login)",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "example": "Hiking" },
+                "description": { "example": "Explore miles of trails through old-growth forests and volcanic landscapes." },
+                "parkCode": { "example": "crla" },
+                "duration": { "example": "2-4 hours" },
+                "difficulty": { "example": "Moderate" },
+                "season": { "example": "Summer" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Validation Error" },
+          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/activities/{id}": {
+      "get": {
+        "tags": ["Activities"],
+        "description": "Get a single activity by ID",
+        "produces": ["application/json"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "400": { "description": "Invalid ID" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "put": {
+        "tags": ["Activities"],
+        "description": "Update an activity (requires GitHub OAuth login)",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "example": "Hiking" },
+                "description": { "example": "Explore miles of trails through old-growth forests and volcanic landscapes." },
+                "parkCode": { "example": "crla" },
+                "duration": { "example": "2-4 hours" },
+                "difficulty": { "example": "Moderate" },
+                "season": { "example": "Summer" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "400": { "description": "Validation Error / Invalid ID" },
+          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "delete": {
+        "tags": ["Activities"],
+        "description": "Delete an activity (requires GitHub OAuth login)",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "400": { "description": "Invalid ID" },
+          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    }
+  }
+}
