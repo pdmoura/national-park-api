@@ -1,0 +1,77 @@
+// LOCALHOST
+
+### GET all parks 
+GET http://localhost:3000/parks
+
+### GET a single park by ID
+GET http://localhost:3000/parks/69be1d2d09921380a2166e09
+
+### CREATE a new park
+POST http://localhost:3000/parks HTTP/1.1
+Content-Type: application/json
+
+{
+  "description": "Crater Lake inspires awe.",
+  "fullName": "Crater Lake National Park",
+  "latLong": "lat:42.94065854, long:-122.1338414",
+  "latitude": "42.94065854",
+  "longitude": "-122.1338414",
+  "parkCode": "crla",
+  "url": "https://www.nps.gov/crla/index.htm"
+}
+
+### UPDATE a park
+PUT http://localhost:3000/parks/69be1d2d09921380a2166e09 HTTP/1.1
+Content-Type: application/json
+
+{
+  "description": "Crater Lake inspires awe.",
+  "fullName": "Crater Lake National Park",
+  "latLong": "lat:42.94065854, long:-122.1338414",
+  "latitude": "42.94065854",
+  "longitude": "-122.1338414",
+  "parkCode": "crla",
+  "url": "https://www.nps.gov/crla/index.htm"
+}
+
+### DELETE a park
+DELETE http://localhost:3000/parks/69be1d2d09921380a2166e09 HTTP/1.1
+
+###
+# ACTIVITIES
+###
+
+### GET all activities
+GET http://localhost:3000/activities
+
+### GET a single activity by ID
+GET http://localhost:3000/activities/69be1d2d09921380a2166e10
+
+### CREATE a new activity
+POST http://localhost:3000/activities HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Hiking",
+  "description": "Explore miles of trails through old-growth forests and volcanic landscapes.",
+  "parkCode": "crla",
+  "duration": "2-4 hours",
+  "difficulty": "Moderate",
+  "season": "Summer"
+}
+
+### UPDATE an activity
+PUT http://localhost:3000/activities/69be1d2d09921380a2166e10 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Hiking",
+  "description": "Explore miles of trails through old-growth forests and volcanic landscapes.",
+  "parkCode": "crla",
+  "duration": "2-4 hours",
+  "difficulty": "Moderate",
+  "season": "Summer"
+}
+
+### DELETE an activity
+DELETE http://localhost:3000/activities/69be1d2d09921380a2166e10 HTTP/1.1

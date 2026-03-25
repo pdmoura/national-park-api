@@ -1,0 +1,33 @@
+{
+  "name": "cse341-project2",
+  "version": "1.0.0",
+  "description": "CSE341 Project 2",
+  "homepage": "https://github.com/acottam/cse341-project2#readme",
+  "bugs": {
+    "url": "https://github.com/acottam/cse341-project2/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acottam/cse341-project2.git"
+  },
+  "license": "ISC",
+  "author": "Adam R Cottam",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "mongodb": "^7.1.0",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
