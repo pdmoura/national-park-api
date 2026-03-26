@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     const loggedIn = req.isAuthenticated();
     res.send(
       loggedIn
-        ? `Logged in as ${req.user.displayName || req.user.username}. <a href="/auth/logout">Logout</a>`
+        ? `Logged in as ${req.user.displayName || req.user.username}. <a href="/auth/logout">Logout</a> <a href="/api-docs">API Docs</a>`
         : 'Welcome to the National Parks API. <a href="/auth/login">Login with GitHub</a>'
     );
 });
