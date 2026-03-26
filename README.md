@@ -27,23 +27,7 @@ https://cse341-project-1-bo77.onrender.com/api-docs
 - `PUT /parks/:id` — Update a park 🔒
 - `DELETE /parks/:id` — Delete a park 🔒
 
-### Activities
-| Field | Type | Example |
-|---|---|---|
-| name | string | "Hiking" |
-| description | string | "Explore miles of trails..." |
-| parkCode | string | "crla" |
-| duration | string | "2-4 hours" |
-| difficulty | string | "Moderate" |
-| season | string | "Summer" |
 
-**Endpoints:**
-- `GET /activities` — Get all activities
-- `GET /activities?parkCode=crla` — Filter activities by park
-- `GET /activities/:id` — Get a single activity
-- `POST /activities` — Create an activity 🔒
-- `PUT /activities/:id` — Update an activity 🔒
-- `DELETE /activities/:id` — Delete an activity 🔒
 
 ## Authentication
 
