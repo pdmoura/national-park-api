@@ -12,4 +12,11 @@ const connectDB = async () => {
     }
 };
 
-module.exports = connectDB;
+const getDatabase = () => {
+    if (mongoose.connection.readyState !== 1) {
+        throw new Error('Database not initialized');
+    }
+    return mongoose.connection.db;
+};
+
+module.exports = { connectDB, getDatabase };
