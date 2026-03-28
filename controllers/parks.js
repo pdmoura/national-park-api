@@ -2,6 +2,7 @@ const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
 const validatePark = (body) => {
+    // #swagger.tags = ['Parks']
     const errors = [];
     const required = ['description', 'fullName', 'latLong', 'latitude', 'longitude', 'parkCode', 'url'];
     for (const field of required) {
@@ -13,7 +14,8 @@ const validatePark = (body) => {
 };
 
 const getAll = async (req, res) => {
-    // swagger.tags = ['Parks']
+    // #swagger.tags = ['Parks']
+    // #swagger.description = 'Retrieve all parks'
     try {
         const result = await mongodb.getDatabase().collection('parks').find().toArray();
         res.setHeader('Content-Type', 'application/json');
@@ -24,7 +26,8 @@ const getAll = async (req, res) => {
 };
 
 const getSingle = async (req, res) => {
-    // swagger.tags = ['Parks']
+    // #swagger.tags = ['Parks']
+    // #swagger.description = 'Retrieve a single park by its ID'
     try {
         if (!ObjectId.isValid(req.params.id)) {
             return res.status(400).json({ error: 'Invalid ID format.' });
@@ -40,7 +43,26 @@ const getSingle = async (req, res) => {
 };
 
 const createPark = async (req, res) => {
-    // swagger.tags = ['Parks']
+    /* #swagger.tags = ['Parks']
+     #swagger.description = 'Create a new park'
+     #swagger.parameters['obj'] = {
+        in: 'body',
+        description: 'Park object',
+        required: true,
+        schema: {
+            "fullName": "Crater Lake National Park",
+            "parkCode": "crla",
+            "description": "Crater Lake inspires awe. Deepest lake in the USA.",
+            "state": "Oregon",
+            "region": "Pacific West",
+            "latitude": "42.94065854",
+            "longitude": "-122.1338414",
+            "url": "https://www.nps.gov/crla/index.htm",
+            "imageUrl": "https://example.com/crater-lake.jpg",
+            "established": "1902",
+            "area": "183224"
+        }
+    }*/   
     try {
         const errors = validatePark(req.body);
         if (errors.length > 0) return res.status(400).json({ errors });
@@ -67,7 +89,20 @@ const createPark = async (req, res) => {
 };
 
 const updatePark = async (req, res) => {
-    // swagger.tags = ['Parks']
+    // #swagger.tags = ['Parks']
+    // #swagger.description = 'Update a park by its ID'
+    /* #swagger.parameters['obj'] = {
+        in: 'body',
+        description: 'Park object',
+        required: true,
+        schema: {
+            "fullName": "Crater Lake National Park",
+            "parkCode": "crla",
+            "description": "Crater Lake inspires awe. Deepest lake in the USA.",
+            "state": "Idaho"
+        }
+    }
+    */
     try {
         if (!ObjectId.isValid(req.params.id)) {
             return res.status(400).json({ error: 'Invalid ID format.' });
@@ -98,7 +133,8 @@ const updatePark = async (req, res) => {
 };
 
 const deletePark = async (req, res) => {
-    // swagger.tags = ['Parks']
+    // #swagger.tags = ['Parks']
+    // #swagger.description = 'Delete a park by its ID'
     try {
         if (!ObjectId.isValid(req.params.id)) {
             return res.status(400).json({ error: 'Invalid ID format.' });
