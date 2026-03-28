@@ -7,13 +7,12 @@ router.get('/', (req, res) => {
     const loggedIn = req.isAuthenticated();
     res.send(
       loggedIn
-        ? `Logged in as ${req.user.displayName || req.user.username}. <a href="/auth/logout">Logout</a>`
-        : 'Welcome to the National Parks and Activities API. <a href="/auth/login">Login with GitHub</a>'
+        ? `Logged in as ${req.user.displayName || req.user.username}. <a href="/auth/logout">Logout</a> <a href="/api-docs">API Docs</a>`
+        : 'Welcome to the National Parks API. <a href="/auth/login">Login with GitHub</a>'
     );
 });
 
 router.use('/auth', require('./auth'));
 router.use('/parks', require('./parks'));
-router.use('/activities', require('./activities'));
 
 module.exports = router;

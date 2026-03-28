@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const database = require('./data/database');
+const { connectDB } = require('./data/database');
 const passport = require('passport');
 const session = require('express-session');
 const GitHubStrategy = require('passport-github2').Strategy;
@@ -9,7 +9,7 @@ const cors = require('cors');
 
 dotenv.config();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const app = express();
 
 app
@@ -48,10 +48,6 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-database.initDb((err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    app.listen(port, () => { console.log(`Database is listening. Node is running on port ${port}`) });
-  }
+connectDB().then(() => {
+  app.listen(port, () => { console.log(`Node is running on port ${port}`) });
 });
