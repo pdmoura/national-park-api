@@ -19,4 +19,11 @@ router.get('/logout', (req, res, next) => {
   });
 });
 
+router.get('/status', (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.status(200).json({ user: req.user });
+  }
+  return res.status(401).json({ error: 'Not logged in.' });
+});
+
 module.exports = router;
