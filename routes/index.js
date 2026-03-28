@@ -3,16 +3,27 @@ const router = require('express').Router();
 router.use('/', require('./swagger'));
 
 router.get('/', (req, res) => {
-    //#swagger.tags = ['Welcome']
+    // #swagger.ignore = true
     const loggedIn = req.isAuthenticated();
-    res.send(
-      loggedIn
-        ? `Logged in as ${req.user.displayName || req.user.username}. <a href="/auth/logout">Logout</a> <a href="/api-docs">API Docs</a>`
-        : 'Welcome to the National Parks API. <a href="/auth/login">Login with GitHub</a>'
-    );
+    const name = loggedIn ? (req.user.displayName || req.user.username) : '';
+    
+    res.send(`
+        <div style="font-family: sans-serif; text-align: center; margin-top: 50px;">
+            <h1>National Park Adventures API</h1>
+            ${loggedIn 
+                ? `<p>Logged in as <b>${name}</b></p>
+                   <a href="/api-docs">API Docs</a> | <a href="/auth/logout">Logout</a>`
+                : `<p>Welcome to the National Parks API.</p>
+                   <a href="/auth/login">Login with GitHub</a>`
+            }
+        </div>
+    `);
 });
 
 router.use('/auth', require('./auth'));
-router.use('/parks', require('./parks'));
+router.use('/parks', (req, res, next) => {
+    // #swagger.tags = ['Parks']
+    next();
+}, require('./parks'));
 
 module.exports = router;
