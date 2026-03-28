@@ -23,52 +23,12 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/": {
-      "get": {
-        "tags": [
-          "Welcome"
-        ],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/auth/login": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/auth/callback": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/auth/logout": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/parks/": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Parks"
+        ],
+        "description": "Retrieve all parks",
         "produces": [
           "application/json"
         ],
@@ -83,35 +43,62 @@
         }
       },
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Parks"
+        ],
+        "description": "Create a new park",
         "parameters": [
           {
             "name": "obj",
             "in": "body",
+            "description": "Park object",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "description": {
-                  "example": "any"
-                },
                 "fullName": {
-                  "example": "any"
-                },
-                "latLong": {
-                  "example": "any"
-                },
-                "latitude": {
-                  "example": "any"
-                },
-                "longitude": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Crater Lake National Park"
                 },
                 "parkCode": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "crla"
                 },
-                "url\r": {
-                  "example": "any"
+                "description": {
+                  "type": "string",
+                  "example": "Crater Lake inspires awe. Deepest lake in the USA."
+                },
+                "state": {
+                  "type": "string",
+                  "example": "Oregon"
+                },
+                "region": {
+                  "type": "string",
+                  "example": "Pacific West"
+                },
+                "latitude": {
+                  "type": "string",
+                  "example": "42.94065854"
+                },
+                "longitude": {
+                  "type": "string",
+                  "example": "-122.1338414"
+                },
+                "url": {
+                  "type": "string",
+                  "example": "https://www.nps.gov/crla/index.htm"
+                },
+                "imageUrl": {
+                  "type": "string",
+                  "example": "https://example.com/crater-lake.jpg"
+                },
+                "established": {
+                  "type": "string",
+                  "example": "1902"
+                },
+                "area": {
+                  "type": "string",
+                  "example": "183224"
                 }
               }
             }
@@ -135,8 +122,10 @@
     },
     "/parks/{id}": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Parks"
+        ],
+        "description": "Retrieve a single park by its ID",
         "produces": [
           "application/json"
         ],
@@ -164,8 +153,10 @@
         }
       },
       "put": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Parks"
+        ],
+        "description": "Update a park by its ID",
         "parameters": [
           {
             "name": "id",
@@ -176,29 +167,26 @@
           {
             "name": "obj",
             "in": "body",
+            "description": "Park object",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "description": {
-                  "example": "any"
-                },
                 "fullName": {
-                  "example": "any"
-                },
-                "latLong": {
-                  "example": "any"
-                },
-                "latitude": {
-                  "example": "any"
-                },
-                "longitude": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Crater Lake National Park"
                 },
                 "parkCode": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "crla"
                 },
-                "url\r": {
-                  "example": "any"
+                "description": {
+                  "type": "string",
+                  "example": "Crater Lake inspires awe. Deepest lake in the USA."
+                },
+                "state": {
+                  "type": "string",
+                  "example": "Idaho"
                 }
               }
             }
@@ -220,8 +208,10 @@
         }
       },
       "delete": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Parks"
+        ],
+        "description": "Delete a park by its ID",
         "parameters": [
           {
             "name": "id",

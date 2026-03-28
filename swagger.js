@@ -2,7 +2,7 @@ const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
   info: {
-    title: 'CSE341 Project 2 API',
+    title: 'National Parks API',
     description: 'API for exploring National Parks',
   },
   host: 'localhost:3000',

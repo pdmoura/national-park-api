@@ -1,4 +1,4 @@
-# CSE341 Final Project - National Park Adventures API
+# CSE341 Final Project - National Park API
 CSE341 — Web Services — Final Project
 
 ## Live URL
