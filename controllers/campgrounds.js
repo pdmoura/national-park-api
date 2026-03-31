@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 const Campground = require('../models/Campground');
 
 const getAllCampgrounds = async (req, res) => {
+    /* #swagger.tags = ['Campgrounds']
+       #swagger.description = 'Retrieve all campgrounds, optionally filtered by parkId'
+       #swagger.parameters['parkId'] = {
+          in: 'query',
+          description: 'Optional park ObjectId used to filter campgrounds',
+          required: false,
+          type: 'string',
+          example: '64f1234567890abcde123456'
+       }
+    */
     try {
         const filter = {};
 
@@ -27,6 +37,16 @@ const getAllCampgrounds = async (req, res) => {
 };
 
 const getCampgroundById = async (req, res) => {
+    /* #swagger.tags = ['Campgrounds']
+       #swagger.description = 'Retrieve a single campground by its ID'
+       #swagger.parameters['id'] = {
+          in: 'path',
+          description: 'Campground ObjectId',
+          required: true,
+          type: 'string',
+          example: '64f1234567890abcde123456'
+       }
+    */
     try {
         const { id } = req.params;
 
@@ -56,6 +76,26 @@ const getCampgroundById = async (req, res) => {
 };
 
 const createCampground = async (req, res) => {
+    /* #swagger.tags = ['Campgrounds']
+       #swagger.description = 'Create a new campground. Authentication required.'
+       #swagger.parameters['obj'] = {
+          in: 'body',
+          description: 'Campground object',
+          required: true,
+          schema: {
+             "parkId": "64f1234567890abcde654321",
+             "name": "Rim Village Campground",
+             "description": "Popular lakeside campground with reservable sites.",
+             "reservationUrl": "https://example.com/reservations/rim-village",
+             "numSites": 45,
+             "cost": "$25 per night",
+             "amenities": "Restrooms, potable water, fire pits",
+             "season": "May through September",
+             "latitude": "42.9446",
+             "longitude": "-122.1090"
+          }
+       }
+    */
     try {
         const campground = await Campground.create(req.body);
 
@@ -87,6 +127,26 @@ const createCampground = async (req, res) => {
 };
 
 const updateCampground = async (req, res) => {
+    /* #swagger.tags = ['Campgrounds']
+       #swagger.description = 'Update an existing campground by its ID. Authentication required.'
+       #swagger.parameters['id'] = {
+          in: 'path',
+          description: 'Campground ObjectId',
+          required: true,
+          type: 'string',
+          example: '64f1234567890abcde123456'
+       }
+       #swagger.parameters['obj'] = {
+          in: 'body',
+          description: 'Campground fields to update',
+          schema: {
+             "name": "Rim Village Campground",
+             "numSites": 50,
+             "cost": "$30 per night",
+             "season": "June through September"
+          }
+       }
+    */
     try {
         const { id } = req.params;
 
@@ -141,6 +201,16 @@ const updateCampground = async (req, res) => {
 };
 
 const deleteCampground = async (req, res) => {
+    /* #swagger.tags = ['Campgrounds']
+       #swagger.description = 'Delete a campground by its ID. Authentication required.'
+       #swagger.parameters['id'] = {
+          in: 'path',
+          description: 'Campground ObjectId',
+          required: true,
+          type: 'string',
+          example: '64f1234567890abcde123456'
+       }
+    */
     try {
         const { id } = req.params;
 
