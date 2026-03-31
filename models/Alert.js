@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const alertSchema = new mongoose.Schema({
   parkId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Park',
+    ref: "Park",
     required: true
   },
   title: {
@@ -17,7 +17,7 @@ const alertSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ['closure', 'warning', 'info']
+    enum: ["closure", "warning", "info"]
   },
   startDate: {
     type: String,
@@ -33,4 +33,4 @@ const alertSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Alert', alertSchema);
+module.exports = mongoose.model("Alert", alertSchema);
