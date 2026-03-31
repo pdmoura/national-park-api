@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const parkSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
@@ -14,4 +14,4 @@ const parkSchema = new mongoose.Schema({
   area: { type: String }
 });
 
-module.exports = mongoose.model('Park', parkSchema);
+module.exports = mongoose.model("Park", parkSchema);
