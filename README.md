@@ -169,18 +169,79 @@ This API uses **GitHub OAuth** via Passport.js for authentication. Routes marked
 - `GET /auth/callback` — GitHub OAuth callback
 - `GET /auth/logout` — Logs out and destroys the session
 
-## Setup
+## Setup Instructions for MongoDB and GitHub OAuth
+
+### 1. Configure `.env`
+Each developer should create their own `.env` file (based on `.env.sample`) and add their **MongoDB connection string** from their cluster.
+
+- Copy `.env.sample` → `.env`
+- Fill in the values:
+
 ```bash
-npm install
-npm start
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/<database-name>?retryWrites=true&w=majority
+
+SESSION_SECRET=<your-generated-secret>
+GITHUB_CLIENT_ID=<your-dev-github-app-client-id>
+GITHUB_CLIENT_SECRET=<your-dev-github-app-client-secret>
+GITHUB_CALLBACK_URL=http://localhost:3000/auth/callback
+PORT=3000
 ```
 
-Requires a `.env` file with:
+⚠️ **Important:**
+- Replace `<cluster-url>` with your MongoDB Atlas cluster URL.
+- Add a `<database-name>` at the end of the URI (e.g., `nationalparks`) so collections are created inside that database.
+- Use [this link](https://generate-secret.vercel.app/64) to generate a secure `SESSION_SECRET`.
+- **Alternative (via Terminal):**
+  1. Open a terminal and type `node` then press **Enter**.
+  2. Type `require('crypto').randomBytes(64).toString('hex')` and press **Enter**.
+  3. Copy the generated string (without the single quotes) and paste it into your `.env`.
+
+### 2. Create a GitHub OAuth App
+This project uses GitHub OAuth for authentication. Each developer must create their own GitHub OAuth App for local testing.
+
+1. Go to **GitHub Developer Settings**.
+2. Under **OAuth Apps**, click **New OAuth App**.
+3. Fill in the form:
+   - **Application name**: National Park API (Dev) (or any name you like)
+   - **Homepage URL**: `http://localhost:3000`
+   - **Authorization callback URL**: `http://localhost:3000/auth/callback`
+4. Click **Register application**.
+5. Copy the **Client ID** and generate a **Client Secret**.
+6. Add these values to your `.env` file:
+
+```bash
+GITHUB_CLIENT_ID=<your-client-id>
+GITHUB_CLIENT_SECRET=<your-client-secret>
+GITHUB_CALLBACK_URL=http://localhost:3000/auth/callback
 ```
-MONGODB_URI=<your-mongodb-connection-string>
-PORT=3000
-SESSION_SECRET=<your-session-secret>
-GITHUB_CLIENT_ID=<your-github-client-id>
-GITHUB_CLIENT_SECRET=<your-github-client-secret>
-GITHUB_CALLBACK_URL=<your-callback-url>
+
+### 3. Seed the Database
+Once `.env` is configured, run:
+
+```bash
+node seed.js
 ```
+
+This will:
+- Connect to your MongoDB cluster.
+- Clear existing collections.
+- Insert fake data into parks, users, adventures, campgrounds, reviews, trails, and wildlife.
+
+## Development Workflow
+
+To contribute to this project:
+1. Ensure you are on the `development` branch and perform a `git pull` to get the latest changes.
+2. Create a new branch for your task. Prefix it with your initials and follow the issue recommendation name.
+   - Example: `feature/swagger-setup` becomes `pa-feature/swagger-setup` (if your initials are `pa`).
+3. Before committing, run the linter to catch any errors:
+   ```bash
+   npm run lint
+   ```
+4. If any errors are reported, run the auto-fix command:
+   ```bash
+   npm run lint:fix
+   ```
+   Then re-run `npm run lint` to confirm all issues are resolved.
+5. Commit your changes and push them to the repository.
+6. Open a **Pull Request** from your branch to the `development` branch for evaluation and merging.
+

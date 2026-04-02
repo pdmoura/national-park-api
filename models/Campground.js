@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const campgroundSchema = new mongoose.Schema({
   parkId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Park',
+    ref: "Park",
     required: true
   },
   name: {
@@ -43,4 +43,4 @@ const campgroundSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Campground', campgroundSchema);
+module.exports = mongoose.model("Campground", campgroundSchema);
