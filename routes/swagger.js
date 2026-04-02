@@ -7,7 +7,12 @@ router.use("/api-docs", swaggerUi.serve);
 router.get("/api-docs", (req, res) => {
   // #swagger.ignore = true
   /* #swagger.ignore = true */
-  swaggerUi.setup(swaggerDocument)(req, res);
+  const doc = {
+    ...swaggerDocument,
+    host: req.get("host"),
+    schemes: [req.protocol]
+  };
+  swaggerUi.setup(doc)(req, res);
 });
 
 module.exports = router;
