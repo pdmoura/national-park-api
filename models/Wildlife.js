@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const wildlifeSchema = new mongoose.Schema({
   parkId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Park',
+    ref: "Park",
     required: true
   },
   commonName: {
@@ -17,7 +17,7 @@ const wildlifeSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ['mammal', 'bird', 'fish', 'reptile', 'amphibian']
+    enum: ["mammal", "bird", "fish", "reptile", "amphibian"]
   },
   description: {
     type: String,
@@ -36,4 +36,4 @@ const wildlifeSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Wildlife', wildlifeSchema);
+module.exports = mongoose.model("Wildlife", wildlifeSchema);

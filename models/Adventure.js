@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const adventureSchema = new mongoose.Schema({
   parkId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Park',
+    ref: "Park",
     required: true
   },
   userId: {
@@ -25,7 +25,7 @@ const adventureSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ['hike', 'camp', 'scenic drive', 'wildlife viewing']
+    enum: ["hike", "camp", "scenic drive", "wildlife viewing"]
   },
   duration: {
     type: String,
@@ -34,7 +34,7 @@ const adventureSchema = new mongoose.Schema({
   difficulty: {
     type: String,
     required: true,
-    enum: ['Easy', 'Moderate', 'Strenuous']
+    enum: ["Easy", "Moderate", "Strenuous"]
   },
   rating: {
     type: Number,
@@ -44,4 +44,4 @@ const adventureSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Adventure', adventureSchema);
+module.exports = mongoose.model("Adventure", adventureSchema);

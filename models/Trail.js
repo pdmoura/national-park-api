@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const trailSchema = new mongoose.Schema({
   parkId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Park',
+    ref: "Park",
     required: true
   },
   name: {
@@ -25,12 +25,12 @@ const trailSchema = new mongoose.Schema({
   difficulty: {
     type: String,
     required: true,
-    enum: ['Easy', 'Moderate', 'Strenuous']
+    enum: ["Easy", "Moderate", "Strenuous"]
   },
   trailType: {
     type: String,
     required: true,
-    enum: ['out-and-back', 'loop', 'point-to-point']
+    enum: ["out-and-back", "loop", "point-to-point"]
   },
   dogFriendly: {
     type: Boolean,
@@ -42,4 +42,4 @@ const trailSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Trail', trailSchema);
+module.exports = mongoose.model("Trail", trailSchema);
