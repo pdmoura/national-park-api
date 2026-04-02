@@ -9,8 +9,7 @@
   "basePath": "/",
   "tags": [],
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "Bearer": {
@@ -247,8 +246,7 @@
             "in": "query",
             "description": "Optional park ObjectId used to filter campgrounds",
             "required": false,
-            "type": "string",
-            "example": "64f1234567890abcde123456"
+            "type": "string"
           }
         ],
         "responses": {
@@ -257,6 +255,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -349,8 +350,7 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Campground ObjectId",
-            "example": "64f1234567890abcde123456"
+            "description": "Campground ObjectId"
           }
         ],
         "responses": {
@@ -439,6 +439,222 @@
             "required": true,
             "type": "string",
             "description": "Campground ObjectId",
+            "example": "64f1234567890abcde123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/adventures/": {
+      "get": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Retrieve all adventures, optionally filtered by parkId",
+        "parameters": [
+          {
+            "name": "parkId",
+            "in": "query",
+            "description": "Optional park ObjectId used to filter adventures",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Create a new adventure. Authentication required.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Adventure object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parkId": {
+                  "type": "string",
+                  "example": "64b9f2b8a4b8a7c2d8291f11"
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "github12345"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Amazing Hike"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Hiked down to the water."
+                },
+                "date": {
+                  "type": "string",
+                  "example": "2023-08-15"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "hike"
+                },
+                "duration": {
+                  "type": "string",
+                  "example": "3 hours"
+                },
+                "difficulty": {
+                  "type": "string",
+                  "example": "Moderate"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/adventures/{id}": {
+      "get": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Retrieve a single adventure by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Update an existing adventure by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Adventure fields to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Updated Hike"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 4
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Delete an adventure by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
             "example": "64f1234567890abcde123456"
           }
         ],

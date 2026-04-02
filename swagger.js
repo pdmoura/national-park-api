@@ -6,7 +6,7 @@ const doc = {
     description: "API for exploring National Parks",
   },
   host: "localhost:3000",
-  schemes: ["http", "https"],
+  schemes: ["http"],
   securityDefinitions: {
     Bearer: {
       type: "apiKey",

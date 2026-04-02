@@ -20,15 +20,15 @@ router.get("/", (req, res) => {
     `);
 });
 
-router.use('/auth', require('./auth'));
-router.use('/parks', (req, res, next) => {
-    // #swagger.tags = ['Parks']
-    next();
-}, require('./parks'));
-router.use('/campgrounds', (req, res, next) => {
-    // #swagger.tags = ['Campgrounds']
-    next();
-}, require('./campgrounds'));
+router.use("/auth", require("./auth"));
+router.use("/parks", (req, res, next) => {
+  // #swagger.tags = ['Parks']
+  next();
+}, require("./parks"));
+router.use("/campgrounds", (req, res, next) => {
+  // #swagger.tags = ['Campgrounds']
+  next();
+}, require("./campgrounds"));
 
 router.use("/adventures", (req, res, next) => {
   // #swagger.tags = ['Adventures']
