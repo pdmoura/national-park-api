@@ -30,4 +30,9 @@ router.use('/campgrounds', (req, res, next) => {
     next();
 }, require('./campgrounds'));
 
+router.use("/adventures", (req, res, next) => {
+  // #swagger.tags = ['Adventures']
+  next();
+}, require("./adventures"));
+
 module.exports = router;
