@@ -9,8 +9,7 @@
   "basePath": "/",
   "tags": [],
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "Bearer": {
@@ -162,7 +161,6 @@
             "name": "obj",
             "in": "body",
             "description": "Park object",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
@@ -215,6 +213,449 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/campgrounds/": {
+      "get": {
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Retrieve all campgrounds, optionally filtered by parkId",
+        "parameters": [
+          {
+            "name": "parkId",
+            "in": "query",
+            "description": "Optional park ObjectId used to filter campgrounds",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Create a new campground. Authentication required.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Campground object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parkId": {
+                  "type": "string",
+                  "example": "64f1234567890abcde654321"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Rim Village Campground"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Popular lakeside campground with reservable sites."
+                },
+                "reservationUrl": {
+                  "type": "string",
+                  "example": "https://example.com/reservations/rim-village"
+                },
+                "numSites": {
+                  "type": "number",
+                  "example": 45
+                },
+                "cost": {
+                  "type": "string",
+                  "example": "$25 per night"
+                },
+                "amenities": {
+                  "type": "string",
+                  "example": "Restrooms, potable water, fire pits"
+                },
+                "season": {
+                  "type": "string",
+                  "example": "May through September"
+                },
+                "latitude": {
+                  "type": "string",
+                  "example": "42.9446"
+                },
+                "longitude": {
+                  "type": "string",
+                  "example": "-122.1090"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/campgrounds/{id}": {
+      "get": {
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Retrieve a single campground by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Campground ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Update an existing campground by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Campground ObjectId",
+            "example": "64f1234567890abcde123456"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Campground fields to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Rim Village Campground"
+                },
+                "numSites": {
+                  "type": "number",
+                  "example": 50
+                },
+                "cost": {
+                  "type": "string",
+                  "example": "$30 per night"
+                },
+                "season": {
+                  "type": "string",
+                  "example": "June through September"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Delete a campground by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Campground ObjectId",
+            "example": "64f1234567890abcde123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/adventures/": {
+      "get": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Retrieve all adventures, optionally filtered by parkId",
+        "parameters": [
+          {
+            "name": "parkId",
+            "in": "query",
+            "description": "Optional park ObjectId used to filter adventures",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Create a new adventure. Authentication required.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Adventure object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parkId": {
+                  "type": "string",
+                  "example": "64b9f2b8a4b8a7c2d8291f11"
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "github12345"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Amazing Hike"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Hiked down to the water."
+                },
+                "date": {
+                  "type": "string",
+                  "example": "2023-08-15"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "hike"
+                },
+                "duration": {
+                  "type": "string",
+                  "example": "3 hours"
+                },
+                "difficulty": {
+                  "type": "string",
+                  "example": "Moderate"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/adventures/{id}": {
+      "get": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Retrieve a single adventure by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Update an existing adventure by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Adventure fields to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Updated Hike"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 4
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Delete an adventure by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
           }
         ],
         "responses": {
