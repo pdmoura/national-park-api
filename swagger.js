@@ -1,23 +1,23 @@
-const swaggerAutogen = require('swagger-autogen')();
+const swaggerAutogen = require("swagger-autogen")();
 
 const doc = {
   info: {
-    title: 'CSE341 Project 2 API',
-    description: 'API for exploring National Parks and Activities',
+    title: "National Parks API",
+    description: "API for exploring National Parks",
   },
-  host: 'cse341-project-1-bo77.onrender.com',
-  schemes: ['https'],
+  host: "localhost:3000",
+  schemes: ["http"],
   securityDefinitions: {
     Bearer: {
-      type: 'apiKey',
-      name: 'Authorization',
-      in: 'header',
-      description: 'Enter your bearer token in the format: Bearer <token>'
+      type: "apiKey",
+      name: "Authorization",
+      in: "header",
+      description: "Enter your bearer token in the format: Bearer <token>"
     }
   }
 };
 
-const outputFile = './swagger.json';
-const endpointsFiles = ['./routes/index.js'];
+const outputFile = "./swagger.json";
+const endpointsFiles = ["./routes/index.js"];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

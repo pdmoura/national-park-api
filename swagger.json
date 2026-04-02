@@ -1,254 +1,682 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "CSE341 Project 2 API",
-    "description": "API for exploring National Parks and Activities. Authentication is handled via GitHub OAuth. Visit /auth/login to authenticate.",
+    "title": "National Parks API",
+    "description": "API for exploring National Parks",
     "version": "1.0.0"
   },
-  "host": "cse341-project-1-bo77.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
-  "schemes": ["https"],
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter your bearer token in the format: Bearer <token>"
+    }
+  },
+  "consumes": [],
+  "produces": [],
   "paths": {
-    "/": {
-      "get": {
-        "tags": ["Welcome"],
-        "description": "Welcome endpoint. Shows login status and link to GitHub OAuth login.",
-        "responses": {
-          "200": { "description": "OK" }
-        }
-      }
-    },
-    "/auth/login": {
-      "get": {
-        "tags": ["Auth"],
-        "description": "Redirects to GitHub for OAuth authentication.",
-        "responses": {
-          "302": { "description": "Redirect to GitHub" }
-        }
-      }
-    },
-    "/auth/callback": {
-      "get": {
-        "tags": ["Auth"],
-        "description": "GitHub OAuth callback. Redirects to / on success.",
-        "responses": {
-          "302": { "description": "Redirect to /" }
-        }
-      }
-    },
-    "/auth/logout": {
-      "get": {
-        "tags": ["Auth"],
-        "description": "Logs out the current user and destroys the session.",
-        "responses": {
-          "302": { "description": "Redirect to /" }
-        }
-      }
-    },
     "/parks/": {
       "get": {
-        "tags": ["Parks"],
-        "description": "Get all parks",
-        "produces": ["application/json"],
+        "tags": [
+          "Parks"
+        ],
+        "description": "Retrieve all parks",
+        "parameters": [],
         "responses": {
-          "200": { "description": "OK" },
-          "500": { "description": "Internal Server Error" }
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       },
       "post": {
-        "tags": ["Parks"],
-        "description": "Create a new park (requires GitHub OAuth login)",
+        "tags": [
+          "Parks"
+        ],
+        "description": "Create a new park",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Park object",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "description": { "example": "Crater Lake inspires awe." },
-                "fullName": { "example": "Crater Lake National Park" },
-                "latLong": { "example": "lat:42.94065854, long:-122.1338414" },
-                "latitude": { "example": "42.94065854" },
-                "longitude": { "example": "-122.1338414" },
-                "parkCode": { "example": "crla" },
-                "url": { "example": "https://www.nps.gov/crla/index.htm" }
+                "fullName": {
+                  "type": "string",
+                  "example": "Crater Lake National Park"
+                },
+                "parkCode": {
+                  "type": "string",
+                  "example": "crla"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Crater Lake inspires awe. Deepest lake in the USA."
+                },
+                "state": {
+                  "type": "string",
+                  "example": "Oregon"
+                },
+                "region": {
+                  "type": "string",
+                  "example": "Pacific West"
+                },
+                "latitude": {
+                  "type": "string",
+                  "example": "42.94065854"
+                },
+                "longitude": {
+                  "type": "string",
+                  "example": "-122.1338414"
+                },
+                "url": {
+                  "type": "string",
+                  "example": "https://www.nps.gov/crla/index.htm"
+                },
+                "imageUrl": {
+                  "type": "string",
+                  "example": "https://example.com/crater-lake.jpg"
+                },
+                "established": {
+                  "type": "string",
+                  "example": "1902"
+                },
+                "area": {
+                  "type": "string",
+                  "example": "183224"
+                }
               }
             }
           }
         ],
         "responses": {
-          "201": { "description": "Created" },
-          "400": { "description": "Validation Error" },
-          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
-          "500": { "description": "Internal Server Error" }
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       }
     },
     "/parks/{id}": {
       "get": {
-        "tags": ["Parks"],
-        "description": "Get a single park by ID",
-        "produces": ["application/json"],
+        "tags": [
+          "Parks"
+        ],
+        "description": "Retrieve a single park by its ID",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Invalid ID" },
-          "404": { "description": "Not Found" },
-          "500": { "description": "Internal Server Error" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       },
       "put": {
-        "tags": ["Parks"],
-        "description": "Update a park (requires GitHub OAuth login)",
+        "tags": [
+          "Parks"
+        ],
+        "description": "Update a park by its ID",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" },
           {
-            "name": "body",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Park object",
             "schema": {
               "type": "object",
               "properties": {
-                "description": { "example": "Crater Lake inspires awe." },
-                "fullName": { "example": "Crater Lake National Park" },
-                "latLong": { "example": "lat:42.94065854, long:-122.1338414" },
-                "latitude": { "example": "42.94065854" },
-                "longitude": { "example": "-122.1338414" },
-                "parkCode": { "example": "crla" },
-                "url": { "example": "https://www.nps.gov/crla/index.htm" }
+                "fullName": {
+                  "type": "string",
+                  "example": "Crater Lake National Park"
+                },
+                "parkCode": {
+                  "type": "string",
+                  "example": "crla"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Crater Lake inspires awe. Deepest lake in the USA."
+                },
+                "state": {
+                  "type": "string",
+                  "example": "Idaho"
+                }
               }
             }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Validation Error / Invalid ID" },
-          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
-          "500": { "description": "Internal Server Error" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       },
       "delete": {
-        "tags": ["Parks"],
-        "description": "Delete a park (requires GitHub OAuth login)",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
+        "tags": [
+          "Parks"
         ],
-        "responses": {
-          "204": { "description": "No Content" },
-          "400": { "description": "Invalid ID" },
-          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
-          "500": { "description": "Internal Server Error" }
-        }
-      }
-    },
-    "/activities/": {
-      "get": {
-        "tags": ["Activities"],
-        "description": "Get all activities (optionally filter by parkCode)",
-        "produces": ["application/json"],
+        "description": "Delete a park by its ID",
         "parameters": [
           {
-            "name": "parkCode",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "description": "Filter activities by park code (e.g. crla, yell, yose)"
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "500": { "description": "Internal Server Error" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/campgrounds/": {
+      "get": {
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Retrieve all campgrounds, optionally filtered by parkId",
+        "parameters": [
+          {
+            "name": "parkId",
+            "in": "query",
+            "description": "Optional park ObjectId used to filter campgrounds",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       },
       "post": {
-        "tags": ["Activities"],
-        "description": "Create a new activity (requires GitHub OAuth login)",
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Create a new campground. Authentication required.",
         "parameters": [
           {
-            "name": "body",
+            "name": "obj",
             "in": "body",
+            "description": "Campground object",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "name": { "example": "Hiking" },
-                "description": { "example": "Explore miles of trails through old-growth forests and volcanic landscapes." },
-                "parkCode": { "example": "crla" },
-                "duration": { "example": "2-4 hours" },
-                "difficulty": { "example": "Moderate" },
-                "season": { "example": "Summer" }
+                "parkId": {
+                  "type": "string",
+                  "example": "64f1234567890abcde654321"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Rim Village Campground"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Popular lakeside campground with reservable sites."
+                },
+                "reservationUrl": {
+                  "type": "string",
+                  "example": "https://example.com/reservations/rim-village"
+                },
+                "numSites": {
+                  "type": "number",
+                  "example": 45
+                },
+                "cost": {
+                  "type": "string",
+                  "example": "$25 per night"
+                },
+                "amenities": {
+                  "type": "string",
+                  "example": "Restrooms, potable water, fire pits"
+                },
+                "season": {
+                  "type": "string",
+                  "example": "May through September"
+                },
+                "latitude": {
+                  "type": "string",
+                  "example": "42.9446"
+                },
+                "longitude": {
+                  "type": "string",
+                  "example": "-122.1090"
+                }
               }
             }
           }
         ],
         "responses": {
-          "201": { "description": "Created" },
-          "400": { "description": "Validation Error" },
-          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
-          "500": { "description": "Internal Server Error" }
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       }
     },
-    "/activities/{id}": {
+    "/campgrounds/{id}": {
       "get": {
-        "tags": ["Activities"],
-        "description": "Get a single activity by ID",
-        "produces": ["application/json"],
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Retrieve a single campground by its ID",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Campground ObjectId"
+          }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Invalid ID" },
-          "404": { "description": "Not Found" },
-          "500": { "description": "Internal Server Error" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       },
       "put": {
-        "tags": ["Activities"],
-        "description": "Update an activity (requires GitHub OAuth login)",
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Update an existing campground by its ID. Authentication required.",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" },
           {
-            "name": "body",
-            "in": "body",
+            "name": "id",
+            "in": "path",
             "required": true,
+            "type": "string",
+            "description": "Campground ObjectId",
+            "example": "64f1234567890abcde123456"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Campground fields to update",
             "schema": {
               "type": "object",
               "properties": {
-                "name": { "example": "Hiking" },
-                "description": { "example": "Explore miles of trails through old-growth forests and volcanic landscapes." },
-                "parkCode": { "example": "crla" },
-                "duration": { "example": "2-4 hours" },
-                "difficulty": { "example": "Moderate" },
-                "season": { "example": "Summer" }
+                "name": {
+                  "type": "string",
+                  "example": "Rim Village Campground"
+                },
+                "numSites": {
+                  "type": "number",
+                  "example": 50
+                },
+                "cost": {
+                  "type": "string",
+                  "example": "$30 per night"
+                },
+                "season": {
+                  "type": "string",
+                  "example": "June through September"
+                }
               }
             }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Validation Error / Invalid ID" },
-          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
-          "500": { "description": "Internal Server Error" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       },
       "delete": {
-        "tags": ["Activities"],
-        "description": "Delete an activity (requires GitHub OAuth login)",
+        "tags": [
+          "Campgrounds"
+        ],
+        "description": "Delete a campground by its ID. Authentication required.",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "type": "string" }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Campground ObjectId",
+            "example": "64f1234567890abcde123456"
+          }
         ],
         "responses": {
-          "204": { "description": "No Content" },
-          "400": { "description": "Invalid ID" },
-          "401": { "description": "Unauthorized — must be logged in via GitHub OAuth" },
-          "500": { "description": "Internal Server Error" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/adventures/": {
+      "get": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Retrieve all adventures, optionally filtered by parkId",
+        "parameters": [
+          {
+            "name": "parkId",
+            "in": "query",
+            "description": "Optional park ObjectId used to filter adventures",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Create a new adventure. Authentication required.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Adventure object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parkId": {
+                  "type": "string",
+                  "example": "64b9f2b8a4b8a7c2d8291f11"
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "github12345"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Amazing Hike"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Hiked down to the water."
+                },
+                "date": {
+                  "type": "string",
+                  "example": "2023-08-15"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "hike"
+                },
+                "duration": {
+                  "type": "string",
+                  "example": "3 hours"
+                },
+                "difficulty": {
+                  "type": "string",
+                  "example": "Moderate"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/adventures/{id}": {
+      "get": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Retrieve a single adventure by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Update an existing adventure by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Adventure fields to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Updated Hike"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 4
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Adventures"
+        ],
+        "description": "Delete an adventure by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       }
     }
-  }
+  },
+  "definitions": {}
 }

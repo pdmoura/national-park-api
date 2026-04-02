@@ -1,57 +1,60 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-const database = require('./data/database');
-const passport = require('passport');
-const session = require('express-session');
-const GitHubStrategy = require('passport-github2').Strategy;
-const cors = require('cors');
+require("dotenv").config();
 
-dotenv.config();
+const express = require("express");
+const cors = require("cors");
+const session = require("express-session");
+
+const { connectDB } = require("./data/database");
+const passport = require("./config/passport");
+const routes = require("./routes");
 
 const port = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV === "production";
 const app = express();
 
-app
-  .use(bodyParser.json())
-  .use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
-  }))
-  .use(passport.initialize())
-  .use(passport.session())
-  .use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    next();
-  })
-  .use(cors({ methods: 'GET, POST, PUT, DELETE, OPTIONS', origin: '*' }))
-  .use('/', require('./routes/index.js'));
+if (isProduction) {
+  app.set("trust proxy", 1);
+}
 
-passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: process.env.GITHUB_CALLBACK_URL
-  },
-  function(accessToken, refreshToken, profile, done) {
-    return done(null, profile);
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+}));
+app.use(express.json());
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  proxy: isProduction,
+  cookie: {
+    secure: isProduction,
+    httpOnly: true,
+    sameSite: "lax"
   }
-));
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use("/", routes);
 
-passport.serializeUser((user, done) => {
-  done(null, user);
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
 });
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
-
-database.initDb((err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    app.listen(port, () => { console.log(`Database is listening. Node is running on port ${port}`) });
+async function startServer() {
+  try {
+    await connectDB();
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+      console.log(`Swagger docs available at http://localhost:${port}/api-docs`);
+    });
+  } catch (err) {
+    console.error("Failed to initialize database. Server not started.", err);
+    process.exit(1);
   }
+}
+
+startServer().catch((err) => {
+  console.error("Unexpected error:", err);
+  process.exit(1);
 });
