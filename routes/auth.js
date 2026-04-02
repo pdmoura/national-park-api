@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const passport = require('../config/passport');
+const passport = require("../config/passport");
 
 
 router.get("/login", (req, res, next) => {
@@ -21,17 +21,17 @@ router.get("/callback",
 );
 
 
-router.get("/logout", (req, res, next) => {
+router.get("/logout", (req, res) => {
   // #swagger.ignore = true
   req.logout((err) => {
     if (err) {
-      return res.status(500).json({ error: 'Failed to log out.' });
+      return res.status(500).json({ error: "Failed to log out." });
     }
     req.session.destroy((destroyErr) => {
       if (destroyErr) {
-        return res.status(500).json({ error: 'Failed to destroy session.' });
+        return res.status(500).json({ error: "Failed to destroy session." });
       }
-      res.redirect('/');
+      res.redirect("/");
     });
   });
 });
