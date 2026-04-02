@@ -69,16 +69,18 @@ const updatePark = async (req, res) => {
         }
     }
     */
-  try {
-    const park = await Park.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
-    if (!park) return res.status(404).json({ error: "Park not found." });
-    res.status(200).json(park);
-  } catch (err) {
-    if (err.name === "ValidationError") {
-      return res.status(400).json({ error: err.message });
+    try {
+        const park = await Park.findByIdAndUpdate(req.params.id, req.body, {
+            returnDocument: 'after',
+            runValidators: true
+        });
+        if (!park) return res.status(404).json({ error: 'Park not found.' });
+        res.status(200).json(park);
+    } catch (err) {
+        if (err.name === 'ValidationError') {
+            return res.status(400).json({ error: err.message });
+        }
+        res.status(500).json({ error: err.message || 'An error occurred while updating the park.' });
     }
     res.status(500).json({ error: err.message || "An error occurred while updating the park." });
   }
