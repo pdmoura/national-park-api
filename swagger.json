@@ -7,7 +7,6 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "tags": [],
   "schemes": [
     "http"
   ],
@@ -19,8 +18,6 @@
       "description": "Enter your bearer token in the format: Bearer <token>"
     }
   },
-  "consumes": [],
-  "produces": [],
   "paths": {
     "/parks/": {
       "get": {
@@ -28,7 +25,6 @@
           "Parks"
         ],
         "description": "Retrieve all parks",
-        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -676,7 +672,216 @@
           }
         }
       }
+    },
+    "/alerts/": {
+      "get": {
+        "tags": [
+          "Alerts"
+        ],
+        "description": "Retrieve all alerts, optionally filtered by parkId",
+        "parameters": [
+          {
+            "name": "parkId",
+            "in": "query",
+            "description": "Optional park ObjectId used to filter alerts",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Alerts"
+        ],
+        "description": "Create a new alert. Authentication required.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Alert object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parkId": {
+                  "type": "string",
+                  "example": "64f1234567890abcde654321"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Trail Closure"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "The North Rim Trail is temporarily closed due to rockfall."
+                },
+                "category": {
+                  "type": "string",
+                  "example": "closure"
+                },
+                "startDate": {
+                  "type": "string",
+                  "example": "2026-04-01"
+                },
+                "endDate": {
+                  "type": "string",
+                  "example": "2026-04-15"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/alerts/{id}": {
+      "get": {
+        "tags": [
+          "Alerts"
+        ],
+        "description": "Retrieve a single alert by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Alert ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Alerts"
+        ],
+        "description": "Update an alert by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Alert ObjectId"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Alert fields to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Trail Closure Update"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Closure extended because of weather conditions."
+                },
+                "category": {
+                  "type": "string",
+                  "example": "warning"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Alerts"
+        ],
+        "description": "Delete an alert by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Alert ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
-  },
-  "definitions": {}
+  }
 }

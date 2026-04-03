@@ -35,4 +35,9 @@ router.use("/adventures", (req, res, next) => {
   next();
 }, require("./adventures"));
 
+router.use("/alerts", (req, res, next) => {
+  // #swagger.tags = ['Alerts']
+  next();
+}, require("./alerts"));
+
 module.exports = router;
