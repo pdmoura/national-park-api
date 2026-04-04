@@ -1,20 +1,15 @@
 const swaggerAutogen = require("swagger-autogen")();
+require("dotenv").config();
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const doc = {
   info: {
-    title: "National Parks API",
-    description: "API for exploring National Parks",
+    title: "National Park Adventures API",
+    description: "API for exploring National Parks. Authentication is handled via GitHub OAuth. Visit /auth/login to authenticate.",
   },
-  host: "localhost:3000",
-  schemes: ["http"],
-  securityDefinitions: {
-    Bearer: {
-      type: "apiKey",
-      name: "Authorization",
-      in: "header",
-      description: "Enter your bearer token in the format: Bearer <token>"
-    }
-  }
+  host: isProduction ? "national-park-api-sr58.onrender.com" : `localhost:${process.env.PORT || 3000}`,
+  schemes: isProduction ? ["https"] : ["http"],
 };
 
 const outputFile = "./swagger.json";

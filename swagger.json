@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "National Parks API",
-    "description": "API for exploring National Parks",
+    "title": "National Park Adventures API",
+    "description": "API for exploring National Parks. Authentication is handled via GitHub OAuth. Visit /auth/login to authenticate.",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
@@ -11,14 +11,6 @@
   "schemes": [
     "http"
   ],
-  "securityDefinitions": {
-    "Bearer": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header",
-      "description": "Enter your bearer token in the format: Bearer <token>"
-    }
-  },
   "consumes": [],
   "produces": [],
   "paths": {
