@@ -40,4 +40,9 @@ router.use("/alerts", (req, res, next) => {
   next();
 }, require("./alerts"));
 
+router.use("/trails", (req, res, next) => {
+  // #swagger.tags = ['Trails']
+  next();
+}, require("./trails"));
+
 module.exports = router;

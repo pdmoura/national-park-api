@@ -7,6 +7,7 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
+  "tags": [],
   "schemes": [
     "http"
   ],
@@ -18,6 +19,8 @@
       "description": "Enter your bearer token in the format: Bearer <token>"
     }
   },
+  "consumes": [],
+  "produces": [],
   "paths": {
     "/parks/": {
       "get": {
@@ -25,6 +28,7 @@
           "Parks"
         ],
         "description": "Retrieve all parks",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -882,6 +886,225 @@
           }
         }
       }
+    },
+    "/trails/": {
+      "get": {
+        "tags": [
+          "Trails"
+        ],
+        "description": "Retrieve all trails, optionally filtered by parkId",
+        "parameters": [
+          {
+            "name": "parkId",
+            "in": "query",
+            "description": "Optional park ObjectId used to filter trails",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Trails"
+        ],
+        "description": "Create a new trail. Authentication required.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Trail object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parkId": {
+                  "type": "string",
+                  "example": "64f1234567890abcde654321"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Cleetwood Cove Trail"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Only legal access to the shore of Crater Lake."
+                },
+                "distance": {
+                  "type": "string",
+                  "example": "2.2 miles"
+                },
+                "elevationGain": {
+                  "type": "string",
+                  "example": "700 ft"
+                },
+                "difficulty": {
+                  "type": "string",
+                  "example": "Strenuous"
+                },
+                "trailType": {
+                  "type": "string",
+                  "example": "out-and-back"
+                },
+                "dogFriendly": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "season": {
+                  "type": "string",
+                  "example": "Summer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/trails/{id}": {
+      "get": {
+        "tags": [
+          "Trails"
+        ],
+        "description": "Retrieve a single trail by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Trail ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Trails"
+        ],
+        "description": "Update a trail by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Trail ObjectId"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Trail fields to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Cleetwood Cove Trail"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Updated description."
+                },
+                "difficulty": {
+                  "type": "string",
+                  "example": "Moderate"
+                },
+                "dogFriendly": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Trails"
+        ],
+        "description": "Delete a trail by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Trail ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
-  }
+  },
+  "definitions": {}
 }
