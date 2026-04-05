@@ -2,10 +2,10 @@
 CSE341 — Web Services — Final Project
 
 ## Live URL
-https://cse341-project-1-bo77.onrender.com
+https://national-park-api-sr58.onrender.com
 
 ## API Documentation
-https://cse341-project-1-bo77.onrender.com/api-docs
+https://national-park-api-sr58.onrender.com/api-docs
 
 ## Collections
 
@@ -185,6 +185,7 @@ GITHUB_CLIENT_ID=<your-dev-github-app-client-id>
 GITHUB_CLIENT_SECRET=<your-dev-github-app-client-secret>
 GITHUB_CALLBACK_URL=http://localhost:3000/auth/callback
 PORT=3000
+NODE_ENV=development
 ```
 
 ⚠️ **Important:**
