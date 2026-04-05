@@ -245,3 +245,4 @@ To contribute to this project:
 5. Commit your changes and push them to the repository.
 6. Open a **Pull Request** from your branch to the `development` branch for evaluation and merging.
 
+Francis Happy
