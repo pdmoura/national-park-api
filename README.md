@@ -185,6 +185,7 @@ GITHUB_CLIENT_ID=<your-dev-github-app-client-id>
 GITHUB_CLIENT_SECRET=<your-dev-github-app-client-secret>
 GITHUB_CALLBACK_URL=http://localhost:3000/auth/callback
 PORT=3000
+NODE_ENV=development
 ```
 
 ⚠️ **Important:**
