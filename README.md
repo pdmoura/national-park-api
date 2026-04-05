@@ -2,10 +2,10 @@
 CSE341 — Web Services — Final Project
 
 ## Live URL
-https://cse341-project-1-bo77.onrender.com
+https://national-park-api-sr58.onrender.com
 
 ## API Documentation
-https://cse341-project-1-bo77.onrender.com/api-docs
+https://national-park-api-sr58.onrender.com/api-docs
 
 ## Collections
 
