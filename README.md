@@ -270,3 +270,10 @@ npx jest __tests__/parks.test.js
 | Returns all parks | GET | `/parks` | 200, array |
 | Returns a single park | GET | `/parks/:id` | 200, park object |
 | Park not found | GET | `/parks/:id` | 404 |
+
+#### Adventures
+| Test | Method | Endpoint | Expected |
+|---|---|---|---|
+| Returns all adventures | GET | `/adventures` | 200, array |
+| Returns a single adventure | GET | `/adventures/:id` | 200, adventure object |
+| Adventure not found | GET | `/adventures/:id` | 404 |
