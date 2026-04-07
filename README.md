@@ -246,4 +246,27 @@ To contribute to this project:
 5. Commit your changes and push them to the repository.
 6. Open a **Pull Request** from your branch to the `development` branch for evaluation and merging.
 
-Francis Happy
+## Testing
+
+This project uses [Jest](https://jestjs.io/) and [Supertest](https://github.com/ladakh/supertest) for unit testing the API endpoints. Tests mock the Mongoose models so no database connection is required.
+
+### Running Tests
+
+```bash
+npm test
+```
+
+To run a specific test file:
+
+```bash
+npx jest __tests__/parks.test.js
+```
+
+### Test Coverage
+
+#### Parks
+| Test | Method | Endpoint | Expected |
+|---|---|---|---|
+| Returns all parks | GET | `/parks` | 200, array |
+| Returns a single park | GET | `/parks/:id` | 200, park object |
+| Park not found | GET | `/parks/:id` | 404 |
