@@ -291,3 +291,10 @@ npx jest __tests__/parks.test.js
 | Returns all alerts | GET | `/alerts` | 200, array |
 | Returns a single alert | GET | `/alerts/:id` | 200, alert object |
 | Alert not found | GET | `/alerts/:id` | 404 |
+
+#### Campgrounds
+| Test | Method | Endpoint | Expected |
+|---|---|---|---|
+| Returns all campgrounds | GET | `/campgrounds` | 200, array |
+| Returns a single campground | GET | `/campgrounds/:id` | 200, campground object |
+| Campground not found | GET | `/campgrounds/:id` | 404 |
