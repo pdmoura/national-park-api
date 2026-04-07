@@ -250,6 +250,13 @@ To contribute to this project:
 
 This project uses [Jest](https://jestjs.io/) and [Supertest](https://github.com/ladakh/supertest) for unit testing the API endpoints. Tests mock the Mongoose models so no database connection is required.
 
+### Getting Started
+
+Jest and Supertest are included in `devDependencies`, so no extra installation is needed. After pulling the repo:
+
+1. Run `npm install` to install all dependencies (including test tools)
+2. Run `npm test` to execute all tests
+
 ### Running Tests
 
 ```bash

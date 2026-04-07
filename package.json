@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "start": "npm run swagger && node server.js",
     "dev": "nodemon server.js",
     "swagger": "node ./swagger.js",
