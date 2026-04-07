@@ -298,3 +298,10 @@ npx jest __tests__/parks.test.js
 | Returns all campgrounds | GET | `/campgrounds` | 200, array |
 | Returns a single campground | GET | `/campgrounds/:id` | 200, campground object |
 | Campground not found | GET | `/campgrounds/:id` | 404 |
+
+#### Trails
+| Test | Method | Endpoint | Expected |
+|---|---|---|---|
+| Returns all trails | GET | `/trails` | 200, array |
+| Returns a single trail | GET | `/trails/:id` | 200, trail object |
+| Trail not found | GET | `/trails/:id` | 404 |
