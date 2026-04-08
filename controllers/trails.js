@@ -3,12 +3,24 @@ const Trail = require("../models/Trail");
 
 const getAllTrails = async (req, res) => {
   /* #swagger.tags = ['Trails']
-     #swagger.description = 'Retrieve all trails, optionally filtered by parkId'
+     #swagger.description = 'Retrieve all trails with pagination, optionally filtered by parkId'
      #swagger.parameters['parkId'] = {
        in: 'query',
        description: 'Optional park ObjectId used to filter trails',
        required: false,
        type: 'string'
+     }
+     #swagger.parameters['page'] = {
+       in: 'query',
+       description: 'Page number (default: 1)',
+       required: false,
+       type: 'integer'
+     }
+     #swagger.parameters['limit'] = {
+       in: 'query',
+       description: 'Number of results per page (default: 10)',
+       required: false,
+       type: 'integer'
      }
   */
   try {
@@ -21,8 +33,22 @@ const getAllTrails = async (req, res) => {
       filter.parkId = req.query.parkId;
     }
 
-    const trails = await Trail.find(filter);
-    return res.status(200).json(trails);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.max(1, parseInt(req.query.limit) || 10);
+    const skip = (page - 1) * limit;
+
+    const [trails, total] = await Promise.all([
+      Trail.find(filter).skip(skip).limit(limit),
+      Trail.countDocuments(filter)
+    ]);
+
+    return res.status(200).json({
+      data: trails,
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (error) {
     return res.status(500).json({
       error: error.message || "An error occurred while fetching trails."

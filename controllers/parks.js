@@ -1,11 +1,38 @@
 const Park = require("../models/Park");
 
 const getAll = async (req, res) => {
-  // #swagger.tags = ['Parks']
-  // #swagger.description = 'Retrieve all parks'
+  /* #swagger.tags = ['Parks']
+     #swagger.description = 'Retrieve all parks with pagination'
+     #swagger.parameters['page'] = {
+        in: 'query',
+        description: 'Page number (default: 1)',
+        required: false,
+        type: 'integer'
+     }
+     #swagger.parameters['limit'] = {
+        in: 'query',
+        description: 'Number of results per page (default: 10)',
+        required: false,
+        type: 'integer'
+     }
+  */
   try {
-    const parks = await Park.find();
-    res.status(200).json(parks);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.max(1, parseInt(req.query.limit) || 10);
+    const skip = (page - 1) * limit;
+
+    const [parks, total] = await Promise.all([
+      Park.find().skip(skip).limit(limit),
+      Park.countDocuments()
+    ]);
+
+    res.status(200).json({
+      data: parks,
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (err) {
     res.status(500).json({ error: err.message || "An error occurred while fetching parks." });
   }

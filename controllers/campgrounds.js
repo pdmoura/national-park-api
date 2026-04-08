@@ -4,12 +4,24 @@ const Park = require("../models/Park");
 
 const getAllCampgrounds = async (req, res) => {
   /* #swagger.tags = ['Campgrounds']
-       #swagger.description = 'Retrieve all campgrounds, optionally filtered by parkId'
+       #swagger.description = 'Retrieve all campgrounds with pagination, optionally filtered by parkId'
        #swagger.parameters['parkId'] = {
           in: 'query',
           description: 'Optional park ObjectId used to filter campgrounds',
           required: false,
           type: 'string'
+       }
+       #swagger.parameters['page'] = {
+          in: 'query',
+          description: 'Page number (default: 1)',
+          required: false,
+          type: 'integer'
+       }
+       #swagger.parameters['limit'] = {
+          in: 'query',
+          description: 'Number of results per page (default: 10)',
+          required: false,
+          type: 'integer'
        }
     */
   try {
@@ -34,8 +46,22 @@ const getAllCampgrounds = async (req, res) => {
       }
     }
 
-    const campgrounds = await Campground.find(filter);
-    return res.status(200).json(campgrounds);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.max(1, parseInt(req.query.limit) || 10);
+    const skip = (page - 1) * limit;
+
+    const [campgrounds, total] = await Promise.all([
+      Campground.find(filter).skip(skip).limit(limit),
+      Campground.countDocuments(filter)
+    ]);
+
+    return res.status(200).json({
+      data: campgrounds,
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
