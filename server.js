@@ -54,7 +54,11 @@ async function startServer() {
   }
 }
 
-startServer().catch((err) => {
-  console.error("Unexpected error:", err);
-  process.exit(1);
-});
+if (require.main === module) {
+  startServer().catch((err) => {
+    console.error("Unexpected error:", err);
+    process.exit(1);
+  });
+}
+
+module.exports = app;
