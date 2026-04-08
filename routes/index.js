@@ -45,4 +45,11 @@ router.use("/trails", (req, res, next) => {
   next();
 }, require("./trails"));
 
+router.use("/reviews", (req, res, next) => {
+  // #swagger.tags = ['Reviews']
+  next();
+}, require("./reviews"));
+module.exports = router;
+
+
 module.exports = router;
