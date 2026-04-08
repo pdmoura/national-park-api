@@ -102,6 +102,9 @@
           "401": {
             "description": "Unauthorized"
           },
+          "429": {
+            "description": "Too Many Requests (Rate limit exceeded)"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -188,6 +191,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "429": {
+            "description": "Too Many Requests (Rate limit exceeded)"
           },
           "500": {
             "description": "Internal Server Error"
