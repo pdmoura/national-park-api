@@ -11,6 +11,7 @@ module.exports = [
       globals: {
         ...globals.node,
         ...globals.commonjs,
+        ...globals.jest,
       },
     },
     rules: {
