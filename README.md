@@ -305,3 +305,8 @@ npx jest __tests__/parks.test.js
 | Returns all trails | GET | `/trails` | 200, array |
 | Returns a single trail | GET | `/trails/:id` | 200, trail object |
 | Trail not found | GET | `/trails/:id` | 404 |
+
+## Note
+
+> **Why does "Claude Code" appear as a contributor?**
+> A team member had a local Git configuration issue that caused one commit to be attributed to Claude Code. That commit was merged into `main` before the mistake was caught. This project is **not** AI-generated — all code is written and reviewed by the team members.

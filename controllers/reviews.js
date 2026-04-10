@@ -95,7 +95,9 @@ const createReview = async (req, res) => {
           "parkId": "64b9f2b8a4b8a7c2d8291f11",
           "userId": "github12345",
           "rating": 5,
-          "comment": "Absolutely beautiful park!"
+          "title": "Breathtaking views",
+          "comment": "Absolutely beautiful park!",
+          "visitDate": "2023-07-20"
       }
   } */
   try {

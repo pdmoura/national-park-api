@@ -1149,9 +1149,17 @@
                   "type": "number",
                   "example": 5
                 },
+                "title": {
+                  "type": "string",
+                  "example": "Breathtaking views"
+                },
                 "comment": {
                   "type": "string",
                   "example": "Absolutely beautiful park!"
+                },
+                "visitDate": {
+                  "type": "string",
+                  "example": "2023-07-20"
                 }
               }
             }
