@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "start": "npm run swagger && node server.js",
     "dev": "nodemon server.js",
     "swagger": "node ./swagger.js",
@@ -35,12 +35,19 @@
     "nodemon": "^3.1.14",
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",
-    "swagger-autogen": "^2.23.7",
+    "swagger-autogen": "^2.9.2",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.1.0",
-    "globals": "^17.4.0"
+    "globals": "^17.4.0",
+    "jest": "^30.3.0",
+    "supertest": "^7.2.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage",
+    "clearMocks": true
   }
 }

@@ -1096,6 +1096,419 @@
           }
         }
       }
+    },
+    "/reviews/": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Retrieve all reviews, optionally filtered by parkId",
+        "parameters": [
+          {
+            "name": "parkId",
+            "in": "query",
+            "description": "Optional park ObjectId used to filter reviews",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Create a new review. Authentication required.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Review object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parkId": {
+                  "type": "string",
+                  "example": "64b9f2b8a4b8a7c2d8291f11"
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "github12345"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 5
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Breathtaking views"
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Absolutely beautiful park!"
+                },
+                "visitDate": {
+                  "type": "string",
+                  "example": "2023-07-20"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Retrieve a single review by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Review ObjectId",
+            "example": "64f1234567890abcde123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Update an existing review by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Review ObjectId",
+            "example": "64f1234567890abcde123456"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Review fields to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "number",
+                  "example": 4
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Updated comment."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "Delete a review by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Review ObjectId",
+            "example": "64f1234567890abcde123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/wildlife/": {
+      "get": {
+        "tags": [
+          "Wildlife"
+        ],
+        "description": "Retrieve all wildlife, optionally filtered by parkId",
+        "parameters": [
+          {
+            "name": "parkId",
+            "in": "query",
+            "description": "Optional park ObjectId used to filter wildlife",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Wildlife"
+        ],
+        "description": "Create a new wildlife entry. Authentication required.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Wildlife object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parkId": {
+                  "type": "string",
+                  "example": "64b9f2b8a4b8a7c2d8291f11"
+                },
+                "commonName": {
+                  "type": "string",
+                  "example": "Clarks Nutcracker"
+                },
+                "scientificName": {
+                  "type": "string",
+                  "example": "Nucifraga columbiana"
+                },
+                "category": {
+                  "type": "string",
+                  "example": "bird"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A bird known for hoarding pine seeds."
+                },
+                "habitat": {
+                  "type": "string",
+                  "example": "High elevation pine forests"
+                },
+                "conservationStatus": {
+                  "type": "string",
+                  "example": "Least Concern"
+                },
+                "imageUrl": {
+                  "type": "string",
+                  "example": "https://example.com/bird.jpg"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/wildlife/{id}": {
+      "get": {
+        "tags": [
+          "Wildlife"
+        ],
+        "description": "Retrieve a single wildlife entry by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Wildlife ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Wildlife"
+        ],
+        "description": "Update an existing wildlife entry by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Wildlife ObjectId"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Wildlife fields to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "commonName": {
+                  "type": "string",
+                  "example": "Clarks Nutcracker"
+                },
+                "conservationStatus": {
+                  "type": "string",
+                  "example": "Near Threatened"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Wildlife"
+        ],
+        "description": "Delete a wildlife entry by its ID. Authentication required.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Wildlife ObjectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
   "definitions": {}
