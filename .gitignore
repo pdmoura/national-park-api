@@ -1,5 +1,12 @@
 /node_modules
 .env
 .DS_Store
+<<<<<<< HEAD
 .idea
 dist
+=======
+/.sfdx/
+.idea
+dist
+.claude
+>>>>>>> b548250620aa2501421bb5d5caec2f52cb025a47

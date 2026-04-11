@@ -35,4 +35,15 @@ router.use("/adventures", (req, res, next) => {
   next();
 }, require("./adventures"));
 
+router.use("/alerts", (req, res, next) => {
+  // #swagger.tags = ['Alerts']
+  next();
+}, require("./alerts"));
+
+router.use("/trails", (req, res, next) => {
+  // #swagger.tags = ['Trails']
+  next();
+}, require("./trails"));
+
+router.use("/wildlife", require("./wildlife"));
 module.exports = router;

@@ -185,6 +185,10 @@ GITHUB_CLIENT_ID=<your-dev-github-app-client-id>
 GITHUB_CLIENT_SECRET=<your-dev-github-app-client-secret>
 GITHUB_CALLBACK_URL=http://localhost:3000/auth/callback
 PORT=3000
+<<<<<<< HEAD
+=======
+NODE_ENV=development
+>>>>>>> b548250620aa2501421bb5d5caec2f52cb025a47
 ```
 
 ⚠️ **Important:**
@@ -245,3 +249,7 @@ To contribute to this project:
 5. Commit your changes and push them to the repository.
 6. Open a **Pull Request** from your branch to the `development` branch for evaluation and merging.
 
+<<<<<<< HEAD
+=======
+Francis Happy
+>>>>>>> b548250620aa2501421bb5d5caec2f52cb025a47
