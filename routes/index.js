@@ -50,6 +50,3 @@ router.use("/reviews", (req, res, next) => {
   next();
 }, require("./reviews"));
 module.exports = router;
-
-
-module.exports = router;
