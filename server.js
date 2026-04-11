@@ -3,10 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
+const wildlifeRoutes = require("./routes/wildlife");
 
 const { connectDB } = require("./data/database");
 const passport = require("./config/passport");
 const routes = require("./routes");
+
 
 const port = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === "production";
@@ -15,6 +17,8 @@ const app = express();
 if (isProduction) {
   app.set("trust proxy", 1);
 }
+
+app.use("/wildlife", wildlifeRoutes);
 
 app.use(cors({
   origin: true,
@@ -40,6 +44,8 @@ app.use("/", routes);
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
+
+
 
 async function startServer() {
   try {
