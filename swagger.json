@@ -1093,17 +1093,17 @@
         }
       }
     },
-    "/wildlife/": {
+    "/reviews/": {
       "get": {
         "tags": [
-          "Wildlife"
+          "Reviews"
         ],
-        "description": "Retrieve all wildlife, optionally filtered by parkId",
+        "description": "Retrieve all reviews, optionally filtered by parkId",
         "parameters": [
           {
             "name": "parkId",
             "in": "query",
-            "description": "Optional wildlife ObjectId used to filter trails",
+            "description": "Optional park ObjectId used to filter reviews",
             "required": false,
             "type": "string"
           }
@@ -1115,6 +1115,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -1122,49 +1125,49 @@
       },
       "post": {
         "tags": [
-          "Wildlife"
+          "Reviews"
         ],
-        "description": "Create a new wildlife species. Authentication required.",
+        "description": "Create a new review. Authentication required.",
         "parameters": [
           {
             "name": "obj",
             "in": "body",
-            "description": "Wildlife object",
+            "description": "Review object",
             "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Adventure fields to update",
             "schema": {
               "type": "object",
               "properties": {
                 "parkId": {
                   "type": "string",
-                  "example": "64f1234567890abcde654321"
+                  "example": "64b9f2b8a4b8a7c2d8291f11"
                 },
-                "commonName": {
+                "userId": {
                   "type": "string",
-                  "example": "Bald Eagle"
+                  "example": "github12345"
                 },
-                "scientificName": {
-                  "type": "string",
-                  "example": "Haliaeetus leucocephalus"
+                "rating": {
+                  "type": "number",
+                  "example": 5
                 },
-                "category": {
+                "title": {
                   "type": "string",
-                  "example": "bird"
+                  "example": "Breathtaking views"
                 },
-                "description": {
+                "comment": {
                   "type": "string",
-                  "example": "Large bird of prey found near lakes and rivers."
+                  "example": "Absolutely beautiful park!"
                 },
-                "habitat": {
+                "visitDate": {
                   "type": "string",
-                  "example": "Forests, wetlands, and coastal regions"
-                },
-                "conservationStatus": {
-                  "type": "string",
-                  "example": "Least Concern"
-                },
-                "imageUrl": {
-                  "type": "string",
-                  "example": "https://example.com/bald-eagle.jpg"
+                  "example": "2023-07-20"
                 }
               }
             }
@@ -1186,19 +1189,20 @@
         }
       }
     },
-    "/wildlife/{id}": {
+    "/reviews/{id}": {
       "get": {
         "tags": [
-          "Wildlife"
+          "Reviews"
         ],
-        "description": "Retrieve a single wildlife by its ID",
+        "description": "Retrieve a single review by its ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Wildlife ObjectId"
+            "description": "Review ObjectId",
+            "example": "64f1234567890abcde123456"
           }
         ],
         "responses": {
@@ -1218,53 +1222,32 @@
       },
       "put": {
         "tags": [
-          "Wildlife"
+          "Reviews"
         ],
-        "description": "Update an existing wildlife species. Authentication required.",
+        "description": "Update an existing review by its ID. Authentication required.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Wildlife ObjectId",
-            "example": "64f1234567890abcde654321"
+            "description": "Review ObjectId",
+            "example": "64f1234567890abcde123456"
           },
           {
             "name": "obj",
             "in": "body",
-            "description": "Wildlife fields to update",
-            "required": true,
+            "description": "Review fields to update",
             "schema": {
               "type": "object",
               "properties": {
-                "commonName": {
-                  "type": "string",
-                  "example": "Updated Bald Eagle"
+                "rating": {
+                  "type": "number",
+                  "example": 4
                 },
-                "scientificName": {
+                "comment": {
                   "type": "string",
-                  "example": "Haliaeetus leucocephalus"
-                },
-                "category": {
-                  "type": "string",
-                  "example": "bird"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Updated description of the species."
-                },
-                "habitat": {
-                  "type": "string",
-                  "example": "Updated habitat information"
-                },
-                "conservationStatus": {
-                  "type": "string",
-                  "example": "Endangered"
-                },
-                "imageUrl": {
-                  "type": "string",
-                  "example": "https://example.com/updated-bald-eagle.jpg"
+                  "example": "Updated comment."
                 }
               }
             }
@@ -1290,16 +1273,17 @@
       },
       "delete": {
         "tags": [
-          "Wildlife"
+          "Reviews"
         ],
-        "description": "Delete a wildlife by its ID. Authentication required.",
+        "description": "Delete a review by its ID. Authentication required.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Wildlife ObjectId"
+            "description": "Review ObjectId",
+            "example": "64f1234567890abcde123456"
           }
         ],
         "responses": {
@@ -1323,3 +1307,24 @@
     }
   }
 }
+<<<<<<< HEAD
+          "Wildlife"
+        ],
+        "description": "Delete a wildlife by its ID. Authentication required.",
+=======
+          "Reviews"
+        ],
+        "description": "Delete a review by its ID. Authentication required.",
+>>>>>>> 865f3796080a987d7b55b93b0db44ec9ff1016c9
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+<<<<<<< HEAD
+            "description": "Wildlife ObjectId"
+=======
+            "description": "Review ObjectId",
+            "example": "64f1234567890abcde123456"
+>>>>>>> 865f3796080a987d7b55b93b0db44ec9ff1016c9
