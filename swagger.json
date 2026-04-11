@@ -1134,6 +1134,14 @@
             "in": "body",
             "description": "Review object",
             "required": true,
+            "type": "string",
+            "description": "Adventure ObjectId",
+            "example": "64f1234567890abcde123456"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Adventure fields to update",
             "schema": {
               "type": "object",
               "properties": {
