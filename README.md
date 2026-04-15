@@ -306,6 +306,22 @@ npx jest __tests__/parks.test.js
 | Returns a single trail | GET | `/trails/:id` | 200, trail object |
 | Trail not found | GET | `/trails/:id` | 404 |
 
+#### Reviews
+| Test | Method | Endpoint | Expected |
+|---|---|---|---|
+| Returns all reviews | GET | `/reviews` | 200, array |
+| Returns a single review | GET | `/reviews/:id` | 200, review object |
+| Review not found | GET | `/reviews/:id` | 404 |
+| Invalid review id format | GET | `/reviews/:id` | 400 |
+
+#### Wildlife
+| Test | Method | Endpoint | Expected |
+|---|---|---|---|
+| Returns all wildlife | GET | `/wildlife` | 200, array |
+| Returns a single wildlife | GET | `/wildlife/:id` | 200, wildlife object |
+| Wildlife not found | GET | `/wildlife/:id` | 404 |
+| Invalid wildlife id format | GET | `/wildlife/:id` | 400 |
+
 ## Note
 
 > **Why does "Claude Code" appear as a contributor?**

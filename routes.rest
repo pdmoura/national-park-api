@@ -1,43 +1,71 @@
-// LOCALHOST
+### ========================================
+### ENVIRONMENT VARIABLES
+### ========================================
+### Toggle between dev and prod by commenting/uncommenting:
+
+### Development (localhost)
+@baseUrl = http://localhost:3000
+
+### Production (Render)
+# @baseUrl = https://national-park-api-sr58.onrender.com
+
+### Sample IDs — replace with real IDs from your database
+@parkId = 69be1d2d09921380a2166e09
+@adventureId = 64b9f2b8a4b8a7c2d8291f11
+@alertId = 64b9f2b8a4b8a7c2d8291f12
+@campgroundId = 64b9f2b8a4b8a7c2d8291f13
+@reviewId = 64b9f2b8a4b8a7c2d8291f14
+@wildlifeId = 64b9f2b8a4b8a7c2d8291f15
+@trailId = 64b9f2b8a4b8a7c2d8291f16
+@userId = 64b9f2b8a4b8a7c2d8291f17
+
+### Session cookie for protected routes (POST/PUT/DELETE)
+### 1. Login at {{baseUrl}}/auth/login in your browser
+### 2. Open DevTools → Application → Cookies → copy the connect.sid value
+### 3. Paste it below (the full value including s%3A prefix)
+@sessionCookie = connect.sid=Hc67JVHRqqjwTCQkcftK1qVjXXp7dhB9.tj1l6B5mSO/p7X2G71b0NDtg16aCYG3LEugbiWm9IRY
+
 
 ### ========================================
 ### PARKS
 ### ========================================
 
-### GET all parks 
-GET http://localhost:3000/parks
+### GET all parks
+GET {{baseUrl}}/parks
 
 ### GET a single park by ID
-GET http://localhost:3000/parks/69be1d2d09921380a2166e09
+GET {{baseUrl}}/parks/{{parkId}}
 
-### CREATE a new park
-POST http://localhost:3000/parks HTTP/1.1
+### CREATE a new park 🔒
+POST {{baseUrl}}/parks HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "fullName": "Crater Lake National Park",
+  "fullName": "Salt Lake National Park",
   "parkCode": "crla",
-  "description": "Crater Lake inspires awe. Deepest lake in the USA.",
-  "state": "Oregon",
-  "region": "Pacific West",
+  "description": "Salt Lake inspires awe. Deepest lake in the USA.",
+  "state": "Utah",
+  "region": "Mountain West",
   "latitude": "42.94065854",
-  "longitude": "-122.1338414",
+  "longitude": "-111.8913889",
   "url": "https://www.nps.gov/crla/index.htm",
   "imageUrl": "https://example.com/crater-lake.jpg",
   "established": "1902",
   "area": "183224"
 }
 
-### UPDATE a park
-PUT http://localhost:3000/parks/69be1d2d09921380a2166e09 HTTP/1.1
+### UPDATE a park 🔒
+PUT {{baseUrl}}/parks/{{parkId}} HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "fullName": "Crater Lake National Park",
+  "fullName": "Salt Lake Updated Park",
   "parkCode": "crla",
-  "description": "Updated description for Crater Lake.",
-  "state": "Oregon",
-  "region": "Pacific West",
+  "description": "Updated description for Salt Lake.",
+  "state": "Utah",
+  "region": "Mountain West",
   "latitude": "42.940",
   "longitude": "-122.133",
   "url": "https://www.nps.gov/crla/index.htm",
@@ -46,8 +74,9 @@ Content-Type: application/json
   "area": "183224"
 }
 
-### DELETE a park
-DELETE http://localhost:3000/parks/69be1d2d09921380a2166e09 HTTP/1.1
+### DELETE a park 🔒
+DELETE {{baseUrl}}/parks/{{parkId}} HTTP/1.1
+Cookie: {{sessionCookie}}
 
 
 
@@ -56,17 +85,21 @@ DELETE http://localhost:3000/parks/69be1d2d09921380a2166e09 HTTP/1.1
 ### ========================================
 
 ### GET all adventures
-GET http://localhost:3000/adventures
+GET {{baseUrl}}/adventures
+
+### GET adventures filtered by parkId
+GET {{baseUrl}}/adventures?parkId={{parkId}}
 
 ### GET a single adventure by ID
-GET http://localhost:3000/adventures/64b9f2b8a4b8a7c2d8291f11
+GET {{baseUrl}}/adventures/{{adventureId}}
 
-### CREATE a new adventure
-POST http://localhost:3000/adventures HTTP/1.1
+### CREATE a new adventure 🔒
+POST {{baseUrl}}/adventures HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
+  "parkId": "{{parkId}}",
   "userId": "github12345",
   "title": "Amazing Hike at Crater Lake",
   "description": "Hiked down to the water, it was freezing!",
@@ -77,24 +110,22 @@ Content-Type: application/json
   "rating": 5
 }
 
-### UPDATE an adventure
-PUT http://localhost:3000/adventures/64b9f2b8a4b8a7c2d8291f11 HTTP/1.1
+### UPDATE an adventure 🔒
+PUT {{baseUrl}}/adventures/{{adventureId}} HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
-  "userId": "github12345",
   "title": "Amazing Hike at Crater Lake",
-  "description": "Hiked down to the water, it was freezing!",
-  "date": "2023-08-15",
-  "type": "hike",
   "duration": "4 hours",
   "difficulty": "Strenuous",
   "rating": 4
 }
 
-### DELETE an adventure
-DELETE http://localhost:3000/adventures/64b9f2b8a4b8a7c2d8291f11 HTTP/1.1
+### DELETE an adventure 🔒
+DELETE {{baseUrl}}/adventures/{{adventureId}} HTTP/1.1
+Cookie: {{sessionCookie}}
+
 
 
 ### ========================================
@@ -102,17 +133,21 @@ DELETE http://localhost:3000/adventures/64b9f2b8a4b8a7c2d8291f11 HTTP/1.1
 ### ========================================
 
 ### GET all alerts
-GET http://localhost:3000/alerts
+GET {{baseUrl}}/alerts
+
+### GET alerts filtered by parkId
+GET {{baseUrl}}/alerts?parkId={{parkId}}
 
 ### GET a single alert by ID
-GET http://localhost:3000/alerts/64b9f2b8a4b8a7c2d8291f12
+GET {{baseUrl}}/alerts/{{alertId}}
 
-### CREATE a new alert
-POST http://localhost:3000/alerts HTTP/1.1
+### CREATE a new alert 🔒
+POST {{baseUrl}}/alerts HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
+  "parkId": "{{parkId}}",
   "title": "North Entrance Closed",
   "description": "The North Entrance is closed due to heavy snowfall.",
   "category": "closure",
@@ -121,22 +156,21 @@ Content-Type: application/json
   "isActive": true
 }
 
-### UPDATE an alert
-PUT http://localhost:3000/alerts/64b9f2b8a4b8a7c2d8291f12 HTTP/1.1
+### UPDATE an alert 🔒
+PUT {{baseUrl}}/alerts/{{alertId}} HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
-  "title": "North Entrance Closed",
   "description": "Extended closure due to late snowfall.",
-  "category": "closure",
-  "startDate": "2023-11-01",
   "endDate": "2024-06-01",
   "isActive": true
 }
 
-### DELETE an alert
-DELETE http://localhost:3000/alerts/64b9f2b8a4b8a7c2d8291f12 HTTP/1.1
+### DELETE an alert 🔒
+DELETE {{baseUrl}}/alerts/{{alertId}} HTTP/1.1
+Cookie: {{sessionCookie}}
+
 
 
 ### ========================================
@@ -144,17 +178,21 @@ DELETE http://localhost:3000/alerts/64b9f2b8a4b8a7c2d8291f12 HTTP/1.1
 ### ========================================
 
 ### GET all campgrounds
-GET http://localhost:3000/campgrounds
+GET {{baseUrl}}/campgrounds
+
+### GET campgrounds filtered by parkId
+GET {{baseUrl}}/campgrounds?parkId={{parkId}}
 
 ### GET a single campground by ID
-GET http://localhost:3000/campgrounds/64b9f2b8a4b8a7c2d8291f13
+GET {{baseUrl}}/campgrounds/{{campgroundId}}
 
-### CREATE a new campground
-POST http://localhost:3000/campgrounds HTTP/1.1
+### CREATE a new campground 🔒
+POST {{baseUrl}}/campgrounds HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
+  "parkId": "{{parkId}}",
   "name": "Mazama Campground",
   "description": "Nestled in an old-growth forest.",
   "reservationUrl": "https://example.com/reserve",
@@ -166,25 +204,20 @@ Content-Type: application/json
   "longitude": "-122.167"
 }
 
-### UPDATE a campground
-PUT http://localhost:3000/campgrounds/64b9f2b8a4b8a7c2d8291f13 HTTP/1.1
+### UPDATE a campground 🔒
+PUT {{baseUrl}}/campgrounds/{{campgroundId}} HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
-  "name": "Mazama Campground",
   "description": "Nestled in an old-growth forest. Updated.",
-  "reservationUrl": "https://example.com/reserve",
-  "numSites": 214,
-  "cost": "$25-$45",
-  "amenities": "Flush toilets, showers, dump station",
-  "season": "Summer",
-  "latitude": "42.868",
-  "longitude": "-122.167"
+  "cost": "$25-$45"
 }
 
-### DELETE a campground
-DELETE http://localhost:3000/campgrounds/64b9f2b8a4b8a7c2d8291f13 HTTP/1.1
+### DELETE a campground 🔒
+DELETE {{baseUrl}}/campgrounds/{{campgroundId}} HTTP/1.1
+Cookie: {{sessionCookie}}
+
 
 
 ### ========================================
@@ -192,17 +225,21 @@ DELETE http://localhost:3000/campgrounds/64b9f2b8a4b8a7c2d8291f13 HTTP/1.1
 ### ========================================
 
 ### GET all reviews
-GET http://localhost:3000/reviews
+GET {{baseUrl}}/reviews
+
+### GET reviews filtered by parkId
+GET {{baseUrl}}/reviews?parkId={{parkId}}
 
 ### GET a single review by ID
-GET http://localhost:3000/reviews/64b9f2b8a4b8a7c2d8291f14
+GET {{baseUrl}}/reviews/{{reviewId}}
 
-### CREATE a new review
-POST http://localhost:3000/reviews HTTP/1.1
+### CREATE a new review 🔒
+POST {{baseUrl}}/reviews HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
+  "parkId": "{{parkId}}",
   "userId": "github12345",
   "rating": 5,
   "title": "Breathtaking views",
@@ -210,21 +247,21 @@ Content-Type: application/json
   "visitDate": "2023-07-20"
 }
 
-### UPDATE a review
-PUT http://localhost:3000/reviews/64b9f2b8a4b8a7c2d8291f14 HTTP/1.1
+### UPDATE a review 🔒
+PUT {{baseUrl}}/reviews/{{reviewId}} HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
-  "userId": "github12345",
   "rating": 4,
   "title": "Breathtaking views, but crowded",
-  "comment": "Pictures do not do it justice. Extremely crowded mid-day.",
-  "visitDate": "2023-07-20"
+  "comment": "Pictures do not do it justice. Extremely crowded mid-day."
 }
 
-### DELETE a review
-DELETE http://localhost:3000/reviews/64b9f2b8a4b8a7c2d8291f14 HTTP/1.1
+### DELETE a review 🔒
+DELETE {{baseUrl}}/reviews/{{reviewId}} HTTP/1.1
+Cookie: {{sessionCookie}}
+
 
 
 ### ========================================
@@ -232,18 +269,22 @@ DELETE http://localhost:3000/reviews/64b9f2b8a4b8a7c2d8291f14 HTTP/1.1
 ### ========================================
 
 ### GET all wildlife
-GET http://localhost:3000/wildlife
+GET {{baseUrl}}/wildlife
 
-### GET a single wildlife by ID
-GET http://localhost:3000/wildlife/64b9f2b8a4b8a7c2d8291f15
+### GET wildlife filtered by parkId
+GET {{baseUrl}}/wildlife?parkId={{parkId}}
 
-### CREATE a new wildlife
-POST http://localhost:3000/wildlife HTTP/1.1
+### GET a single wildlife entry by ID
+GET {{baseUrl}}/wildlife/{{wildlifeId}}
+
+### CREATE a new wildlife entry 🔒
+POST {{baseUrl}}/wildlife HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
-  "commonName": "Clark's Nutcracker",
+  "parkId": "{{parkId}}",
+  "commonName": "Clarks Nutcracker",
   "scientificName": "Nucifraga columbiana",
   "category": "bird",
   "description": "A bird known for hoarding pine seeds.",
@@ -252,23 +293,20 @@ Content-Type: application/json
   "imageUrl": "https://example.com/bird.jpg"
 }
 
-### UPDATE a wildlife
-PUT http://localhost:3000/wildlife/64b9f2b8a4b8a7c2d8291f15 HTTP/1.1
+### UPDATE a wildlife entry 🔒
+PUT {{baseUrl}}/wildlife/{{wildlifeId}} HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
-  "commonName": "Clark's Nutcracker",
-  "scientificName": "Nucifraga columbiana",
-  "category": "bird",
   "description": "Updated info about hoarding pine seeds.",
-  "habitat": "High elevation pine forests",
-  "conservationStatus": "Least Concern",
-  "imageUrl": "https://example.com/bird.jpg"
+  "conservationStatus": "Near Threatened"
 }
 
-### DELETE a wildlife
-DELETE http://localhost:3000/wildlife/64b9f2b8a4b8a7c2d8291f15 HTTP/1.1
+### DELETE a wildlife entry 🔒
+DELETE {{baseUrl}}/wildlife/{{wildlifeId}} HTTP/1.1
+Cookie: {{sessionCookie}}
+
 
 
 ### ========================================
@@ -276,17 +314,21 @@ DELETE http://localhost:3000/wildlife/64b9f2b8a4b8a7c2d8291f15 HTTP/1.1
 ### ========================================
 
 ### GET all trails
-GET http://localhost:3000/trails
+GET {{baseUrl}}/trails
+
+### GET trails filtered by parkId
+GET {{baseUrl}}/trails?parkId={{parkId}}
 
 ### GET a single trail by ID
-GET http://localhost:3000/trails/64b9f2b8a4b8a7c2d8291f16
+GET {{baseUrl}}/trails/{{trailId}}
 
-### CREATE a new trail
-POST http://localhost:3000/trails HTTP/1.1
+### CREATE a new trail 🔒
+POST {{baseUrl}}/trails HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
+  "parkId": "{{parkId}}",
   "name": "Cleetwood Cove Trail",
   "description": "The only legal access to the shore of Crater Lake.",
   "distance": "2.2 miles",
@@ -297,24 +339,20 @@ Content-Type: application/json
   "season": "Summer"
 }
 
-### UPDATE a trail
-PUT http://localhost:3000/trails/64b9f2b8a4b8a7c2d8291f16 HTTP/1.1
+### UPDATE a trail 🔒
+PUT {{baseUrl}}/trails/{{trailId}} HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "parkId": "69be1d2d09921380a2166e09",
-  "name": "Cleetwood Cove Trail",
   "description": "The only legal access to the shore of Crater Lake. Steep switchbacks.",
-  "distance": "2.2 miles",
-  "elevationGain": "700 ft",
-  "difficulty": "Strenuous",
-  "trailType": "out-and-back",
-  "dogFriendly": false,
-  "season": "Summer"
+  "difficulty": "Strenuous"
 }
 
-### DELETE a trail
-DELETE http://localhost:3000/trails/64b9f2b8a4b8a7c2d8291f16 HTTP/1.1
+### DELETE a trail 🔒
+DELETE {{baseUrl}}/trails/{{trailId}} HTTP/1.1
+Cookie: {{sessionCookie}}
+
 
 
 ### ========================================
@@ -322,14 +360,15 @@ DELETE http://localhost:3000/trails/64b9f2b8a4b8a7c2d8291f16 HTTP/1.1
 ### ========================================
 
 ### GET all users
-GET http://localhost:3000/users
+GET {{baseUrl}}/users
 
 ### GET a single user by ID
-GET http://localhost:3000/users/64b9f2b8a4b8a7c2d8291f17
+GET {{baseUrl}}/users/{{userId}}
 
-### CREATE a new user (Note: users might only be created via OAuth, but here's a test)
-POST http://localhost:3000/users HTTP/1.1
+### CREATE a new user (Note: users are typically created via OAuth) 🔒
+POST {{baseUrl}}/users HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
   "githubId": "12345678",
@@ -338,16 +377,16 @@ Content-Type: application/json
   "email": "john@example.com"
 }
 
-### UPDATE a user
-PUT http://localhost:3000/users/64b9f2b8a4b8a7c2d8291f17 HTTP/1.1
+### UPDATE a user 🔒
+PUT {{baseUrl}}/users/{{userId}} HTTP/1.1
 Content-Type: application/json
+Cookie: {{sessionCookie}}
 
 {
-  "githubId": "12345678",
-  "username": "johndoe",
   "displayName": "John H. Doe",
   "email": "john.doe@example.com"
 }
 
-### DELETE a user
-DELETE http://localhost:3000/users/64b9f2b8a4b8a7c2d8291f17 HTTP/1.1
+### DELETE a user 🔒
+DELETE {{baseUrl}}/users/{{userId}} HTTP/1.1
+Cookie: {{sessionCookie}}
