@@ -4,10 +4,18 @@ const Park = require("../models/Park");
 
 const getAllCampgrounds = async (req, res) => {
   /* #swagger.tags = ['Campgrounds']
-       #swagger.description = 'Retrieve all campgrounds, optionally filtered by parkId'
+       #swagger.description = 'Retrieve all campgrounds, optionally filtered by parkId or season'
+       
        #swagger.parameters['parkId'] = {
           in: 'query',
           description: 'Optional park ObjectId used to filter campgrounds',
+          required: false,
+          type: 'string'
+       }
+
+       #swagger.parameters['season'] = {
+          in: 'query',
+          description: 'Filter campgrounds by season (e.g., Summer)',
           required: false,
           type: 'string'
        }
@@ -15,6 +23,7 @@ const getAllCampgrounds = async (req, res) => {
   try {
     const filter = {};
 
+    // 🔹 Existing parkId logic (UNCHANGED)
     if (req.query.parkId) {
       if (!mongoose.Types.ObjectId.isValid(req.query.parkId)) {
         return res.status(400).json({
@@ -32,6 +41,11 @@ const getAllCampgrounds = async (req, res) => {
           message: "Park not found"
         });
       }
+    }
+
+    // 🔥 NEW FILTER (SAFE ADDITION)
+    if (req.query.season) {
+      filter.season = req.query.season;
     }
 
     const campgrounds = await Campground.find(filter);

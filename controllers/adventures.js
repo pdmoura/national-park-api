@@ -4,10 +4,32 @@ const Park = require("../models/Park");
 
 const getAllAdventures = async (req, res) => {
   /* #swagger.tags = ['Adventures']
-     #swagger.description = 'Retrieve all adventures, optionally filtered by parkId'
+     #swagger.description = 'Retrieve all adventures, optionally filtered by parkId, userId, type, or difficulty'
+     
      #swagger.parameters['parkId'] = {
         in: 'query',
         description: 'Optional park ObjectId used to filter adventures',
+        required: false,
+        type: 'string'
+     }
+
+     #swagger.parameters['userId'] = {
+        in: 'query',
+        description: 'Filter by user ID',
+        required: false,
+        type: 'string'
+     }
+
+     #swagger.parameters['type'] = {
+        in: 'query',
+        description: 'Filter by adventure type (e.g., hike)',
+        required: false,
+        type: 'string'
+     }
+
+     #swagger.parameters['difficulty'] = {
+        in: 'query',
+        description: 'Filter by difficulty (Easy, Moderate, Hard)',
         required: false,
         type: 'string'
      }
@@ -15,6 +37,7 @@ const getAllAdventures = async (req, res) => {
   try {
     const filter = {};
 
+    // 🔹 Existing parkId logic (UNCHANGED)
     if (req.query.parkId) {
       if (!mongoose.Types.ObjectId.isValid(req.query.parkId)) {
         return res.status(400).json({
@@ -34,7 +57,21 @@ const getAllAdventures = async (req, res) => {
       }
     }
 
+
+    if (req.query.userId) {
+      filter.userId = req.query.userId;
+    }
+
+    if (req.query.type) {
+      filter.type = req.query.type;
+    }
+
+    if (req.query.difficulty) {
+      filter.difficulty = req.query.difficulty;
+    }
+
     const adventures = await Adventure.find(filter);
+
     return res.status(200).json(adventures);
   } catch (error) {
     return res.status(500).json({

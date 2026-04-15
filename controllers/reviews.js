@@ -4,17 +4,26 @@ const Park = require("../models/Park");
 
 const getAllReviews = async (req, res) => {
   /* #swagger.tags = ['Reviews']
-     #swagger.description = 'Retrieve all reviews, optionally filtered by parkId'
+     #swagger.description = 'Retrieve all reviews, optionally filtered by parkId or rating'
+     
      #swagger.parameters['parkId'] = {
         in: 'query',
         description: 'Optional park ObjectId used to filter reviews',
         required: false,
         type: 'string'
      }
+
+     #swagger.parameters['rating'] = {
+        in: 'query',
+        description: 'Filter reviews by rating (1 to 5)',
+        required: false,
+        type: 'number'
+     }
   */
   try {
     const filter = {};
 
+    // 🔹 Existing parkId logic (UNCHANGED)
     if (req.query.parkId) {
       if (!mongoose.Types.ObjectId.isValid(req.query.parkId)) {
         return res.status(400).json({
@@ -25,7 +34,6 @@ const getAllReviews = async (req, res) => {
 
       filter.parkId = req.query.parkId;
 
-      // Optional: Verify the park actually exists before filtering
       const park = await Park.findById(req.query.parkId);
       if (!park) {
         return res.status(404).json({
@@ -33,6 +41,10 @@ const getAllReviews = async (req, res) => {
           message: "Park not found"
         });
       }
+    }
+
+    if (req.query.rating) {
+      filter.rating = Number(req.query.rating);
     }
 
     const reviews = await Review.find(filter);
@@ -44,6 +56,7 @@ const getAllReviews = async (req, res) => {
     });
   }
 };
+
 
 const getReviewById = async (req, res) => {
   /* #swagger.tags = ['Reviews']
