@@ -4,10 +4,18 @@ const Park = require("../models/Park");
 
 const getAllWildlife = async (req, res) => {
   /* #swagger.tags = ['Wildlife']
-     #swagger.description = 'Retrieve all wildlife, optionally filtered by parkId'
+     #swagger.description = 'Retrieve all wildlife, optionally filtered by parkId or category'
+     
      #swagger.parameters['parkId'] = {
         in: 'query',
         description: 'Optional park ObjectId used to filter wildlife',
+        required: false,
+        type: 'string'
+     }
+
+     #swagger.parameters['category'] = {
+        in: 'query',
+        description: 'Filter wildlife by category (mammal, bird, fish, reptile, amphibian)',
         required: false,
         type: 'string'
      }
@@ -15,6 +23,7 @@ const getAllWildlife = async (req, res) => {
   try {
     const filter = {};
 
+    // 🔹 EXISTING parkId logic (UNCHANGED)
     if (req.query.parkId) {
       if (!mongoose.Types.ObjectId.isValid(req.query.parkId)) {
         return res.status(400).json({
@@ -34,6 +43,10 @@ const getAllWildlife = async (req, res) => {
       }
     }
 
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+
     const wildlife = await Wildlife.find(filter);
     return res.status(200).json(wildlife);
   } catch (error) {
@@ -43,6 +56,7 @@ const getAllWildlife = async (req, res) => {
     });
   }
 };
+
 
 const getWildlifeById = async (req, res) => {
   /* #swagger.tags = ['Wildlife']

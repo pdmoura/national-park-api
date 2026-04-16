@@ -3,22 +3,46 @@ const Trail = require("../models/Trail");
 
 const getAllTrails = async (req, res) => {
   /* #swagger.tags = ['Trails']
-     #swagger.description = 'Retrieve all trails, optionally filtered by parkId'
+     #swagger.description = 'Retrieve all trails, optionally filtered by parkId, difficulty, or dogFriendly'
+     
      #swagger.parameters['parkId'] = {
        in: 'query',
        description: 'Optional park ObjectId used to filter trails',
        required: false,
        type: 'string'
      }
+
+     #swagger.parameters['difficulty'] = {
+       in: 'query',
+       description: 'Filter trails by difficulty (Easy, Moderate, Strenuous)',
+       required: false,
+       type: 'string'
+     }
+
+     #swagger.parameters['dogFriendly'] = {
+       in: 'query',
+       description: 'Filter trails by dog friendliness (true or false)',
+       required: false,
+       type: 'boolean'
+     }
   */
   try {
     const filter = {};
 
+    // 🔹 Existing parkId logic (UNCHANGED)
     if (req.query.parkId) {
       if (!mongoose.Types.ObjectId.isValid(req.query.parkId)) {
         return res.status(400).json({ error: "Invalid parkId." });
       }
       filter.parkId = req.query.parkId;
+    }
+
+    if (req.query.difficulty) {
+      filter.difficulty = req.query.difficulty;
+    }
+
+    if (req.query.dogFriendly !== undefined) {
+      filter.dogFriendly = req.query.dogFriendly === "true";
     }
 
     const trails = await Trail.find(filter);
@@ -29,6 +53,7 @@ const getAllTrails = async (req, res) => {
     });
   }
 };
+
 
 const getTrailById = async (req, res) => {
   /* #swagger.tags = ['Trails']

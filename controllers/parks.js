@@ -2,12 +2,39 @@ const Park = require("../models/Park");
 
 const getAll = async (req, res) => {
   // #swagger.tags = ['Parks']
-  // #swagger.description = 'Retrieve all parks'
+  // #swagger.description = 'Retrieve all parks, optionally filtered by state or region'
+
+  /* #swagger.parameters['state'] = {
+      in: 'query',
+      description: 'Filter parks by state (e.g. Oregon)',
+      required: false,
+      type: 'string'
+  }
+
+  #swagger.parameters['region'] = {
+      in: 'query',
+      description: 'Filter parks by region (e.g. Pacific West)',
+      required: false,
+      type: 'string'
+  } */
+
   try {
-    const parks = await Park.find();
+    const filter = {};
+
+    if (req.query.state) {
+      filter.state = req.query.state;
+    }
+
+    if (req.query.region) {
+      filter.region = req.query.region;
+    }
+
+    const parks = await Park.find(filter);
     res.status(200).json(parks);
   } catch (err) {
-    res.status(500).json({ error: err.message || "An error occurred while fetching parks." });
+    res.status(500).json({
+      error: err.message || "An error occurred while fetching parks."
+    });
   }
 };
 

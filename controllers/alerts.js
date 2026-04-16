@@ -3,23 +3,36 @@ const Alert = require("../models/Alert");
 
 const getAllAlerts = async (req, res) => {
   /* #swagger.tags = ['Alerts']
-        #swagger.description = 'Retrieve all alerts, optionally filtered by parkId'
+        #swagger.description = 'Retrieve all alerts, optionally filtered by parkId or isActive'
+        
         #swagger.parameters['parkId'] = {
           in: 'query',
           description: 'Optional park ObjectId used to filter alerts',
           required: false,
           type: 'string'
        }
+
+        #swagger.parameters['isActive'] = {
+          in: 'query',
+          description: 'Filter alerts by active status (true or false)',
+          required: false,
+          type: 'boolean'
+       }
     */
   try {
     const filter = {};
 
+    // 🔹 Existing parkId logic (UNCHANGED)
     if (req.query.parkId) {
       if (!mongoose.Types.ObjectId.isValid(req.query.parkId)) {
         return res.status(400).json({ error: "Invalid parkId." });
       }
 
       filter.parkId = req.query.parkId;
+    }
+
+    if (req.query.isActive !== undefined) {
+      filter.isActive = req.query.isActive === "true";
     }
 
     const alerts = await Alert.find(filter);

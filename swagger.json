@@ -7,20 +7,32 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "tags": [],
   "schemes": [
     "http"
   ],
-  "consumes": [],
-  "produces": [],
   "paths": {
     "/parks/": {
       "get": {
         "tags": [
           "Parks"
         ],
-        "description": "Retrieve all parks",
-        "parameters": [],
+        "description": "Retrieve all parks, optionally filtered by state or region",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Filter parks by state (e.g. Oregon)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "region",
+            "in": "query",
+            "description": "Filter parks by region (e.g. Pacific West)",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -231,12 +243,19 @@
         "tags": [
           "Campgrounds"
         ],
-        "description": "Retrieve all campgrounds, optionally filtered by parkId",
+        "description": "Retrieve all campgrounds, optionally filtered by parkId or season",
         "parameters": [
           {
             "name": "parkId",
             "in": "query",
             "description": "Optional park ObjectId used to filter campgrounds",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "season",
+            "in": "query",
+            "description": "Filter campgrounds by season (e.g., Summer)",
             "required": false,
             "type": "string"
           }
@@ -458,12 +477,33 @@
         "tags": [
           "Adventures"
         ],
-        "description": "Retrieve all adventures, optionally filtered by parkId",
+        "description": "Retrieve all adventures, optionally filtered by parkId, userId, type, or difficulty",
         "parameters": [
           {
             "name": "parkId",
             "in": "query",
             "description": "Optional park ObjectId used to filter adventures",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "Filter by user ID",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter by adventure type (e.g., hike)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "difficulty",
+            "in": "query",
+            "description": "Filter by difficulty (Easy, Moderate, Hard)",
             "required": false,
             "type": "string"
           }
@@ -674,7 +714,7 @@
         "tags": [
           "Alerts"
         ],
-        "description": "Retrieve all alerts, optionally filtered by parkId",
+        "description": "Retrieve all alerts, optionally filtered by parkId or isActive",
         "parameters": [
           {
             "name": "parkId",
@@ -682,6 +722,13 @@
             "description": "Optional park ObjectId used to filter alerts",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "isActive",
+            "in": "query",
+            "description": "Filter alerts by active status (true or false)",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -884,7 +931,7 @@
         "tags": [
           "Trails"
         ],
-        "description": "Retrieve all trails, optionally filtered by parkId",
+        "description": "Retrieve all trails, optionally filtered by parkId, difficulty, or dogFriendly",
         "parameters": [
           {
             "name": "parkId",
@@ -892,6 +939,20 @@
             "description": "Optional park ObjectId used to filter trails",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "difficulty",
+            "in": "query",
+            "description": "Filter trails by difficulty (Easy, Moderate, Strenuous)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "dogFriendly",
+            "in": "query",
+            "description": "Filter trails by dog friendliness (true or false)",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -1102,7 +1163,7 @@
         "tags": [
           "Reviews"
         ],
-        "description": "Retrieve all reviews, optionally filtered by parkId",
+        "description": "Retrieve all reviews, optionally filtered by parkId or rating",
         "parameters": [
           {
             "name": "parkId",
@@ -1110,6 +1171,13 @@
             "description": "Optional park ObjectId used to filter reviews",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "rating",
+            "in": "query",
+            "description": "Filter reviews by rating (1 to 5)",
+            "required": false,
+            "type": "number"
           }
         ],
         "responses": {
@@ -1306,12 +1374,19 @@
         "tags": [
           "Wildlife"
         ],
-        "description": "Retrieve all wildlife, optionally filtered by parkId",
+        "description": "Retrieve all wildlife, optionally filtered by parkId or category",
         "parameters": [
           {
             "name": "parkId",
             "in": "query",
             "description": "Optional park ObjectId used to filter wildlife",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Filter wildlife by category (mammal, bird, fish, reptile, amphibian)",
             "required": false,
             "type": "string"
           }
@@ -1510,6 +1585,5 @@
         }
       }
     }
-  },
-  "definitions": {}
+  }
 }
